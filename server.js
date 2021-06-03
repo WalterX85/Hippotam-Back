@@ -2,13 +2,13 @@ const express = require("express");
 const connection = require('./db-config');
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 connection.connect((err) => {
   if (err) {
     console.error('error connecting: ' + err.stack);
   } else {
-    console.log('connected to database with threadId :  ' + connection.threadId);
+    console.log('connected to database with threadId : ' + connection.threadId);
   }
 });
 
@@ -16,6 +16,16 @@ app.get("/", (request, response) => {
   console.log(request);
   response.send("Welcome to Express");
 });
+
+app.post("/users/:id/softskill", (request, response) => {
+  console.log(request);
+  response.send("Welcome to softskill");
+});
+app.get("/users/:id/softskill", (request, response) => {
+  console.log(request);
+  response.send("Welcome to softskill");
+});
+
 app.get("/users/:name", (request, response) => {
   response.send(`welcome user ${request.params.name}`);
 });
@@ -54,11 +64,11 @@ const cocktails = [
 
 /* Avec Params, cette requete affiche welcome user cedric en tapant localhost:3000/users/Cedric */
 
-app.get("/users/:username", (request, response) => {
-  response.send(`Welcome ${request.params.username}`);
+app.get("/utilisateur", (request, response) => {
+  response.send(`Welcome ${request.params.id}`);
 });
 
-app.get('users/users', (req, res) => {
+app.get('/users', (req, res) => {
   connection.query('SELECT * FROM users', (err, result) => {
     if (err) {
       res.status(500).send('Error retrieving data from database');
@@ -68,5 +78,13 @@ app.get('users/users', (req, res) => {
   });
 });
 
-
+app.get('/softskill', (req, res) => {
+  connection.query('SELECT * FROM softskill', (err, result) => {
+    if (err) {
+      res.status(500).send('Error retrieving data from database');
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
 
