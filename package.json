@@ -2,9 +2,11 @@
   "name": "reims-js-2103-project3-personality-back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+
   },
   "repository": {
     "type": "git",
@@ -18,9 +20,7 @@
   },
   "homepage": "https://github.com/WildCodeSchool/reims-js-2103-project3-personality-back#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "mysql2": "^2.2.5"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

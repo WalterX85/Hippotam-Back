@@ -21,9 +21,9 @@ VALUES
   (6, 'Cedoo', 'yyfu');
 
 
-DROP TABLE IF EXISTS  `softskill`;
+DROP TABLE IF EXISTS  `softskills`;
 
-CREATE TABLE `softskill` (
+CREATE TABLE `softskills` (
   `id` int NOT NULL AUTO_INCREMENT,
   `sk1` varchar(255) NOT NULL,
   `sk2` varchar(255) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `softskill` (
 
 
 INSERT INTO 
- `softskill`
+ `softskills`
 VALUES
   (1, 'a', 'e'),
   (2, 'b', 'f'),
