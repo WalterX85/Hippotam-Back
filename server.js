@@ -1,7 +1,7 @@
 const express = require("express");
 const connection = require('./db-config');
 const app = express();
-
+app.use(express.json()); // 
 const port = process.env.PORT || 3000;
 
 connection.connect((err) => {
@@ -52,4 +52,7 @@ app.get('/softskills', (req, res) => {
     }
   });
 });
+
+const routes = require('./routes');
+app.use(routes);
 
