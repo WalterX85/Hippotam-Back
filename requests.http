@@ -3,7 +3,7 @@ GET http://localhost:5000/users
 
 ###
 POST http://localhost:5000/users
-Content-type: application/json
+Content-Type: application/json
 
 {
     "email": "me@mail.com",
