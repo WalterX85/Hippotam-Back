@@ -6,16 +6,4 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "email": "me@mail.com",
-    "password": "123456"
-}
 
-###
-
-GET http://localhost:5000/api/user
-Content-Type: application/json
-
-{
-    "email": "me@mail.com",
-    "password": "123456"
-}
