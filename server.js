@@ -1,36 +1,36 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 const connection = require('./db-config');
-var cors = require('cors')
+
 const app = express();
 
-app.use(cors())
-app.use(express.json()); 
+app.use(cors());
+app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
 connection.connect((err) => {
   if (err) {
-    console.error('error connecting: ' + err.stack);
+    console.error(`error connecting: ${err.stack}`);
   } else {
-    console.log('connected to database with threadId : ' + connection.threadId);
+    console.log(`connected to database with threadId : ${connection.threadId}`);
   }
 });
 
-app.get("/", (request, response) => {
-  console.log(request);
-  response.send("Welcome to Express");
+app.get('/', (request, response) => {
+  response.send('Welcome to Express');
 });
 
-app.post("/users/:id/softskills", (request, response) => {
+app.post('/users/:id/softskills', (request, response) => {
   console.log(request);
-  response.send("Welcome to softskills");
+  response.send('Welcome to softskills');
 });
-app.get("/users/:id/softskills", (request, response) => {
+app.get('/users/:id/softskills', (request, response) => {
   console.log(request);
-  response.send("Welcome to softskills");
+  response.send('Welcome to softskills');
 });
 
-app.get("/users/:name", (request, response) => {
+app.get('/users/:name', (request, response) => {
   response.send(`welcome user ${request.params.name}`);
 });
 app.listen(port, () => {
@@ -48,15 +48,15 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/softskills', (req, res) => {
-  connection.query('SELECT * FROM softskill', (err, result) => {
-    if (err) {
+  connection.query('SELECT * FROM softskills', (errSoft, resultSoft) => {
+    if (errSoft) {
       res.status(500).send('Error retrieving data from database');
     } else {
-      res.status(200).json(result);
+      res.status(200).json(resultSoft);
     }
   });
 });
 
 const routes = require('./routes');
-app.use(routes);
 
+app.use(routes);
