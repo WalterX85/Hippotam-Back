@@ -1,14 +1,14 @@
 const express = require("express");
-const connection = require('./db-config');
+const db = require('./db-config');
 const app = express();
 app.use(express.json()); // 
 const port = process.env.PORT || 3000;
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) {
     console.error('error connecting: ' + err.stack);
   } else {
-    console.log('connected to database with threadId : ' + connection.threadId);
+    console.log('connected to database with threadId : ' + db.threadId);
   }
 });
 
@@ -34,7 +34,7 @@ app.listen(port, () => {
 });
 
 app.get('/users', (req, res) => {
-  connection.query('SELECT * FROM users', (err, result) => {
+  db.query('SELECT * FROM users', (err, result) => {
     if (err) {
       res.status(500).send('Error retrieving data from database');
     } else {

@@ -1,10 +1,12 @@
 const argon2 = require('argon2');
-const connection = require("../db-config");
-
+const { hashPassword } = require('../middlewares/auth');
+const db = require("../db-config");
+const routes = require('.');
 const userRoutes = require('express').Router();
 
+
 userRoutes.get('/', (req, res) => {
-  connection.query('SELECT * from users', (err, results) => {
+  db.query('SELECT * from users', (err, results) => {
     if (err) {
       console.log(err);
       res.status(500);
@@ -15,7 +17,7 @@ userRoutes.get('/', (req, res) => {
   })
 });
 /* Etape 1, définir une route qui va accueillir le post email et password */
-userRoutes.post('/', async (req, res) => {
+userRoutes.post('/', hashPassword, (req, res) => {
   const user = {
     name: req.body.name,
     username: req.body.username,
@@ -23,9 +25,9 @@ userRoutes.post('/', async (req, res) => {
     password: req.body.password,
     phone: req.body.phone
   };
-  user.password = await argon2.hash(user.password);
+  user.password = argon2.hash(user.password);
 
-  connection.query('INSERT INTO users ( name , username , email , password , phone ) VALUES (?, ?, ?, ?, ?)', [user.name, user.username, user.email, user.password, user.phone], (err, results) => {
+  db.query('INSERT INTO users ( name , username , email , password , phone ) VALUES (?, ?, ?, ?, ?)', [user.name, user.username, user.email, user.password, user.phone], (err, results) => {
     if (err) {
       console.log(err);
       res.status(500);

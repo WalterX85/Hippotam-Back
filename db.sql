@@ -1,4 +1,6 @@
+DROP DATABASE IF EXISTS personality;
 CREATE DATABASE personality;
+
 USE personality;
 DROP TABLE IF EXISTS  `users`;
 
@@ -58,9 +60,9 @@ VALUES
   (15, 'créatif'),
   (16, 'curiosité');
 
-  DROP TABLE IF EXISTS  `values`;
+  DROP TABLE IF EXISTS  `my_values`;
 
-CREATE TABLE `values` (
+CREATE TABLE `my_values` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY(`id`)
@@ -68,7 +70,7 @@ CREATE TABLE `values` (
 
 
 INSERT INTO 
- `values`
+ `my_values`
 VALUES
   (1, 'respect'),
   (2, 'acceptation'),
@@ -88,12 +90,23 @@ VALUES
   (16, 'dignité');
 
 CREATE TABLE candidate_softskill (
-   id int NOT NULL AUTO_INCREMENT,
-   softskill_id int NOT NULL,
-   candidate_id int NOT NULL,
+   'id' int NOT NULL AUTO_INCREMENT,
+   'softskill_id' int NOT NULL,
+   'candidate_id' int NOT NULL,
   PRIMARY KEY(id),
  CONSTRAINT FK_SoftskillCandidate FOREIGN KEY (softskill_id)
     REFERENCES softskills(id),
   CONSTRAINT FK_CandidateSoftSkill FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8;
+
+CREATE TABLE candidate_value (
+   'id' int NOT NULL AUTO_INCREMENT,
+   'value_id' int NOT NULL,
+   'candidate_id' int NOT NULL,
+  PRIMARY KEY(id),
+ CONSTRAINT FK_ValueCandidate FOREIGN KEY (value_id)
+    REFERENCES my_values(id),
+  CONSTRAINT FK_CandidateValue FOREIGN KEY (candidate_id)
     REFERENCES candidates(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8;
