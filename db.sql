@@ -297,5 +297,27 @@ CREATE TABLE `candidate_recommendations` (
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
+DROP TABLE IF EXISTS `hardSkills`;
+
+ CREATE TABLE `hardSkills` (
+`id` int NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `candidate_hardSkills`;
+
+CREATE TABLE `candidate_hardSkills` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `hardSkill_id` int NOT NULL,
+   `candidate_id` int NOT NULL,
+  PRIMARY KEY(`id`),
+ CONSTRAINT FK_HardSkillsCandidate FOREIGN KEY (hardSkill_id)
+    REFERENCES hardSkills(id),
+  CONSTRAINT FK_CandidateHardSkills FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
 
 
