@@ -7,6 +7,7 @@ routes.get('/', (req, res) => {
 });
 
 const userRoutes = require('./users');
+
 routes.use('/users', userRoutes);
 
 module.exports = routes;
