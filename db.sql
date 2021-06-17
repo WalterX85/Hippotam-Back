@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS  `users`;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,  
   `password` varchar(95) NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
@@ -293,6 +293,28 @@ CREATE TABLE `candidate_recommendations` (
  CONSTRAINT FK_RecommendationsCandidate FOREIGN KEY (recommendation_id)
     REFERENCES recommendations(id),
   CONSTRAINT FK_CandidateRecommendations FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
+DROP TABLE IF EXISTS `hardSkills`;
+
+ CREATE TABLE `hardSkills` (
+`id` int NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `candidate_hardSkills`;
+
+CREATE TABLE `candidate_hardSkills` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `hardSkill_id` int NOT NULL,
+   `candidate_id` int NOT NULL,
+  PRIMARY KEY(`id`),
+ CONSTRAINT FK_HardSkillsCandidate FOREIGN KEY (hardSkill_id)
+    REFERENCES hardSkills(id),
+  CONSTRAINT FK_CandidateHardSkills FOREIGN KEY (candidate_id)
     REFERENCES candidates(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
