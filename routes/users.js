@@ -14,11 +14,14 @@ userRoutes.get('/', (req, res) => {
 });
 
 userRoutes.get('/:id', (req, res) => {
-  db.query('SELECT * FROM users WHERE id = ?', (errId, resultsId) => {
-    if (errId) {
+  db.query('SELECT * FROM users WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) {
       res.status(500);
+    } else if (results.length !== 1) {
+      res.status(404);
     } else {
-      res.status(200).json(resultsId);
+      delete results[0].password;
+      res.status(200).json(results[0]);
     }
   });
 });

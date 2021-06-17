@@ -26,10 +26,69 @@ CREATE TABLE `candidates` (
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-INSERT INTO
- `users`
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` int NOT NULL,
+ `name` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `phone` varchar(100) NOT NULL,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_AdminCandidate FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `recruteur`;
+
+CREATE TABLE `recruteur` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` int NOT NULL,
+ `name` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `phone` varchar(100) NOT NULL,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_RecruteurCandidate FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,  
+  PRIMARY KEY(`id`)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO 
+ `role`
 VALUES
-  ('1', 't@gmail.com', '123456');
+  (1, 'candidate'),
+  (2, 'admin'),
+  (3, 'recruteur');
+
+ DROP TABLE IF EXISTS `user_role`;
+
+CREATE TABLE `user_role` (
+   `user_id` int NOT NULL,
+   `role_id` int NOT NULL,
+  CONSTRAINT FK_UserRole FOREIGN KEY (user_id)
+    REFERENCES users(id),
+ CONSTRAINT FK_RoleUser FOREIGN KEY (role_id)
+    REFERENCES role(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `login`;
+
+CREATE TABLE `login` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `login_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `success` BOOLEAN DEFAULT TRUE,
+   PRIMARY KEY(`id`),
+ CONSTRAINT FK_LoginUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS `photos`;
 
@@ -317,6 +376,8 @@ CREATE TABLE `candidate_hardSkills` (
   CONSTRAINT FK_CandidateHardSkills FOREIGN KEY (candidate_id)
     REFERENCES candidates(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
 
 
 

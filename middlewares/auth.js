@@ -6,13 +6,14 @@ const hashPassword = async (req, res, next) => {
   next();
 };
 
-const verifyPassword = async (req, res) => {
+const verifyPassword = async (req, res, next) => {
   if (await argon2.verify(req.db.password, req.body.password)) {
     const token = jwt.sign({ sub: req.db.id }, 'secret');
     res.status(200).json({ token });
   } else {
     res.sendStatus(400);
   }
+  next();
 };
 
 module.exports = {
