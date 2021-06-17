@@ -26,15 +26,12 @@ userRoutes.get('/:id', (req, res) => {
 /* Etape 1, définir une route qui va accueillir le post email et password */
 userRoutes.post('/', async (req, res) => {
   const user = {
-    name: req.body.name,
-    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    phone: req.body.phone,
   };
   user.password = await argon2.hash(user.password);
 
-  connection.query('INSERT INTO users ( name , username , email , password , phone ) VALUES (?, ?, ?, ?, ?)', [user.name, user.username, user.email, user.password, user.phone], (err, results) => {
+  connection.query('INSERT INTO users ( email , password ) VALUES (?, ?)', [user.email, user.password], (err, results) => {
     if (err) {
       res.status(500);
     } else {

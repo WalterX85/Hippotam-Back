@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS  `users`;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,  
   `password` varchar(95) NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
