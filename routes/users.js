@@ -34,7 +34,7 @@ userRoutes.post('/', async (req, res) => {
   };
   user.password = await argon2.hash(user.password);
 
-  connection.query('INSERT INTO users ( name , username , email , password , phone ) VALUES (?, ?, ?, ?, ?)', [user.name, user.username, user.email, user.password, user.phone], (err, results) => {
+  db.query('INSERT INTO users ( name , username , email , password , phone ) VALUES (?, ?, ?, ?, ?)', [user.name, user.username, user.email, user.password, user.phone], (err, results) => {
     if (err) {
       res.status(500);
     } else {
@@ -43,5 +43,6 @@ userRoutes.post('/', async (req, res) => {
     }
   });
 });
+
 
 module.exports = userRoutes;

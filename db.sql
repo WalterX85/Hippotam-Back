@@ -296,6 +296,25 @@ CREATE TABLE `candidate_recommendations` (
     REFERENCES candidates(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
+CREATE TABLE `recruteur` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` int NOT NULL,
+ `name` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `phone` varchar(100) NOT NULL,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_UserRecruteur FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
+DROP TABLE IF EXISTS `logo`;
 
+CREATE TABLE `logo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `recruteur_id` int NOT NULL,
+  `photo` BLOB,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_PhotosCandidate FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
