@@ -3,55 +3,6 @@ CREATE DATABASE personality;
 
 USE personality;
 
-DROP TABLE IF EXISTS  `users`;
-
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL UNIQUE,  
-  `password` varchar(95) NOT NULL,
-  PRIMARY KEY(`id`)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
-DROP TABLE IF EXISTS `candidates`;
-
-CREATE TABLE `candidates` (
- `id` int NOT NULL AUTO_INCREMENT,
- `user_id` int NOT NULL,
- `name` varchar(100) NOT NULL,
- `username` varchar(100) NOT NULL,
- `phone` varchar(100) NOT NULL,
-  PRIMARY KEY(`id`),
-   CONSTRAINT FK_UserCandidate FOREIGN KEY (user_id)
-    REFERENCES users(id)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
-
-DROP TABLE IF EXISTS `admin`;
-
-CREATE TABLE `admin` (
- `id` int NOT NULL AUTO_INCREMENT,
- `user_id` int NOT NULL,
- `name` varchar(100) NOT NULL,
- `username` varchar(100) NOT NULL,
- `phone` varchar(100) NOT NULL,
-  PRIMARY KEY(`id`),
-   CONSTRAINT FK_AdminCandidate FOREIGN KEY (user_id)
-    REFERENCES users(id)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
-DROP TABLE IF EXISTS `recruteur`;
-
-CREATE TABLE `recruteur` (
- `id` int NOT NULL AUTO_INCREMENT,
- `user_id` int NOT NULL,
- `name` varchar(100) NOT NULL,
- `username` varchar(100) NOT NULL,
- `phone` varchar(100) NOT NULL,
-  PRIMARY KEY(`id`),
-   CONSTRAINT FK_RecruteurCandidate FOREIGN KEY (user_id)
-    REFERENCES users(id)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
@@ -67,15 +18,45 @@ VALUES
   (2, 'admin'),
   (3, 'recruteur');
 
- DROP TABLE IF EXISTS `user_role`;
+DROP TABLE IF EXISTS  `users`;
 
-CREATE TABLE `user_role` (
-   `user_id` int NOT NULL,
-   `role_id` int NOT NULL,
-  CONSTRAINT FK_UserRole FOREIGN KEY (user_id)
-    REFERENCES users(id),
- CONSTRAINT FK_RoleUser FOREIGN KEY (role_id)
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `role_id` int NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,  
+  `password` varchar(95) NOT NULL,
+  PRIMARY KEY(`id`),
+  CONSTRAINT FK_UserRole FOREIGN KEY (role_id)
     REFERENCES role(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
+DROP TABLE IF EXISTS `candidates`;
+
+CREATE TABLE `candidates` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` int NOT NULL,
+ `name` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `telephone` varchar(100) NOT Null,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_UserCandidate FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
+DROP TABLE IF EXISTS `recruteur`;
+
+CREATE TABLE `recruteur` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `user_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+ `companyName` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `phone` varchar(100) NOT NULL,
+  PRIMARY KEY(`id`),
+   CONSTRAINT FK_RecruteurCandidate FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS `login`;
@@ -146,6 +127,7 @@ DROP TABLE IF EXISTS  `candidate_softskill`;
 
 CREATE TABLE `candidate_softskill` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `linked_number` int NOT null,
    `softskill_id` int NOT NULL,
    `candidate_id` int NOT NULL,
   PRIMARY KEY(`id`),
