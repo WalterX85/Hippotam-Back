@@ -25,6 +25,9 @@ CREATE TABLE `users` (
   `role_id` int NOT NULL,
   `email` varchar(100) NOT NULL UNIQUE,  
   `password` varchar(95) NOT NULL,
+  `name` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `telephone` varchar(100) NOT Null,
   PRIMARY KEY(`id`),
   CONSTRAINT FK_UserRole FOREIGN KEY (role_id)
     REFERENCES role(id)
