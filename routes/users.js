@@ -32,15 +32,40 @@ userRoutes.post('/', hashPassword, (req, res) => {
     email: req.body.email,
     role_id: req.body.role_id,
     password: req.body.password,
+    name: req.body.name,
+    username: req.body.username,
+    telephone: req.body.telephone,
   };
 
-  db.query('INSERT INTO users ( email, role_id, password) VALUES (?, ?, ?)', [user.email, user.role_id, user.password], (err, results) => {
+  db.query('INSERT INTO users ( email, role_id, password, name, username, telephone) VALUES (?, ?, ?, ?, ?, ?)', [user.email, user.role_id, user.password, user.name, user.username, user.telephone], (err, results) => {
     if (err) {
       console.log(err);
       res.status(500);
     } else {
       delete user.password;
       res.status(201).json({ ...user, id: results.insertId });
+    }
+  });
+});
+
+userRoutes.put('/:id', (req, res) => {
+  const userId = req.params.id;
+  db.query('SELECT * FROM users WHERE id = ?', [userId], (selectErr, results) => {
+    if (selectErr) {
+      res.status(500).send('Error updating the users');
+    } else {
+      const user = results[0];
+      if (user) {
+        const userToUpdate = { ...user, ...req.body };
+        db.query('UPDATE users SET ? WHERE id = ?', [userToUpdate, userId], (updateErr) => {
+          if (updateErr) {
+            console.log(updateErr);
+            res.status(500).send('Error updating user');
+          } else {
+            res.status(200).json(userToUpdate);
+          }
+        });
+      }
     }
   });
 });
