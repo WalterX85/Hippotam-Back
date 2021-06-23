@@ -4,7 +4,7 @@ const { hashPassword } = require('../middlewares/auth');
 const db = require('../db-config');
 
 userRoutes.get('/', (req, res) => {
-  db.query('SELECT * fROM users', (err, results) => {
+  db.query('SELECT * FROM users', (err, results) => {
     if (err) {
       res.status(500);
     } else {
@@ -30,11 +30,13 @@ userRoutes.get('/:id', (req, res) => {
 userRoutes.post('/', hashPassword, (req, res) => {
   const user = {
     email: req.body.email,
+    role_id: req.body.role_id,
     password: req.body.password,
   };
 
-  db.query('INSERT INTO users ( email , password ) VALUES (?, ?)', [user.email, user.password], (err, results) => {
+  db.query('INSERT INTO users ( email, role_id, password) VALUES (?, ?, ?)', [user.email, user.role_id, user.password], (err, results) => {
     if (err) {
+      console.log(err);
       res.status(500);
     } else {
       delete user.password;
@@ -42,5 +44,14 @@ userRoutes.post('/', hashPassword, (req, res) => {
     }
   });
 });
+
+userRoutes.delete('/:id', (req, res) => (
+  db.query('DELETE FROM users WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) {
+      res.status(500).send('Error deleting a user');
+    } else if (results.affectedRows) res.status(200).send(' 🎉 User deleted');
+    else res.status(404).send('User not found');
+  })
+));
 
 module.exports = userRoutes;
