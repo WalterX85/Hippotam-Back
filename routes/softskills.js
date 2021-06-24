@@ -1,10 +1,11 @@
-const softskillsRoutes = require('express').Router();
+const softskillRoutes = require('express').Router();
 
-const connection = require('../db-config');
+const db = require('../db-config');
 
-softskillsRoutes.get('/softskills', (req, res) => {
-  connection.query('SELECT * fROM softskills', (err, results) => {
+softskillRoutes.get('/', (req, res) => {
+  db.query('SELECT * FROM softskills', (err, results) => {
     if (err) {
+      console.log(err);
       res.status(500);
     } else {
       res.status(200).json(results);
@@ -12,12 +13,15 @@ softskillsRoutes.get('/softskills', (req, res) => {
   });
 });
 
-softskillsRoutes.get('/:id', (req, res) => {
-  connection.query('SELECT * FROM softskills WHERE id = ?', (errId, resultsId) => {
-    if (errId) {
+softskillRoutes.get('/:id', (req, res) => {
+  db.query('SELECT * FROM softskills WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) {
+      console.log(err);
       res.status(500);
     } else {
-      res.status(200).json(resultsId);
+      res.status(200).json(results[0]);
     }
   });
 });
+
+module.exports = softskillRoutes;

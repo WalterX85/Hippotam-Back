@@ -1,0 +1,17 @@
+###
+GET http://localhost:5000/softskills
+
+###
+GET http://localhost:5000/softskills/6
+
+###
+GET http://localhost:5000/screen/1/softskills
+
+###
+POST http://localhost:5000/screen/1/softskills
+Content-Type: application/json
+
+{
+    "linked_number": "1",
+    "softskill_id":  "2"
+}

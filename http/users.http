@@ -19,6 +19,20 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "email": "thomas1@hotmail.com",
+    "role_id": "1",
+    "password": "diebai",
+    "name":"Thomas Dietrich",
+    "username":"tomtom",
+    "telephone":"0755581045"
+    
+}
+
+###
 POST http://localhost:5000/login
 Content-Type: application/json
 
@@ -26,6 +40,17 @@ Content-Type: application/json
     "email": "encore317@hotmail.com",
     "password": "johnbai"
 }
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "thomas1@hotmail.com",
+    "password": "diebai"
+}
+
 
 ###
 PUT http://localhost:5000/users/1
