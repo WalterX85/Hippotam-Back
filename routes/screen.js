@@ -44,4 +44,35 @@ screenRoutes.post('/', verifyToken, (req, res) => {
   });
 });
 
+screenRoutes.put('/:id', (req, res) => {
+  const candidateId = req.params.id;
+  db.query('SELECT * FROM candidates WHERE id = ?', [candidateId], (selectErr, results) => {
+    if (selectErr) {
+      res.status(500).send('Error updating the candidates');
+    } else {
+      const candidate = results[0];
+      if (candidate) {
+        const candidateToUpdate = { ...candidate, ...req.body };
+        db.query('UPDATE candidates SET ? WHERE id = ?', [candidateToUpdate, candidateId], (updateErr) => {
+          if (updateErr) {
+            console.log(updateErr);
+            res.status(500).send('Error updating candidate');
+          } else {
+            res.status(200).json(candidateToUpdate);
+          }
+        });
+      }
+    }
+  });
+});
+
+screenRoutes.delete('/:id', (req, res) => (
+  db.query('DELETE FROM candidates WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) {
+      res.status(500).send('Error deleting a candidate');
+    } else if (results.affectedRows) res.status(200).send(' 🎉 candidate deleted');
+    else res.status(404).send('candidate not found');
+  })
+));
+
 module.exports = screenRoutes;
