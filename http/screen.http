@@ -1,0 +1,30 @@
+###
+GET http://localhost:5000/screen
+
+###
+POST http://localhost:5000/screen
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNDQzOTA0Mn0.59Wd-6qJz1Kk7cVPpKn96hLEESLLgCkZrKbSj7Q-lBE
+
+{
+
+    "name": "Calvin Hyacinth",
+    "username": "chyacin317",
+    "telephone": "0781843810"
+
+}
+
+###
+PUT http://localhost:5000/screen/5
+Content-Type: application/json
+
+{
+
+    "username": "ch"
+
+}
+
+
+###
+DELETE http://localhost:5000/screen/4
+

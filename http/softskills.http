@@ -1,0 +1,6 @@
+
+###
+GET http://localhost:5000/candidates/4/softskills
+
+###
+GET http://localhost:5000/softskills/
