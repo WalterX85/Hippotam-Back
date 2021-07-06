@@ -3,10 +3,12 @@ const routes = require('express').Router();
 const userRoutes = require('./users');
 const screenRoutes = require('./screen');
 const loginRoute = require('./login');
+const softskillRoutes = require('./softskills');
 
 routes.use('/users', userRoutes);
 routes.use('/screen', screenRoutes);
 routes.use('/login', loginRoute);
+routes.use('/softskills', softskillRoutes);
 
 // define the index route
 routes.get('/', (req, res) => {

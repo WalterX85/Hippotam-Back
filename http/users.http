@@ -41,3 +41,71 @@ Content-Type: application/json
 ###
 DELETE http://localhost:5000/users/3
 
+###
+GET http://localhost:5000/users
+
+###
+GET http://localhost:5000/users/1
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "email": "encore317@hotmail.com",
+    "role_id": "1",
+    "password": "johnbai",
+    "name":"Calvin Hyacinth",
+    "username":"chyacin317",
+    "telephone":"0781843810"
+    
+}
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "email": "thomas1@hotmail.com",
+    "role_id": "1",
+    "password": "diebai",
+    "name":"Thomas Dietrich",
+    "username":"tomtom",
+    "telephone":"0755581045"
+    
+}
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "encore317@hotmail.com",
+    "password": "johnbai"
+}
+
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "thomas1@hotmail.com",
+    "password": "diebai"
+}
+
+
+###
+PUT http://localhost:5000/users/1
+Content-Type: application/json
+
+{
+
+    "username": "chyacin317"
+
+}
+
+
+###
+DELETE http://localhost:5000/users/1
+

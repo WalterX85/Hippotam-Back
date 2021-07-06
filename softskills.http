@@ -1,7 +1,0 @@
-
-###
-GET http://localhost:5000/id/softskills
-
-###
-GET http://localhost:5000/softskills/:id
-

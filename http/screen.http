@@ -28,3 +28,49 @@ Content-Type: application/json
 ###
 DELETE http://localhost:5000/screen/4
 
+###
+GET http://localhost:5000/screen
+
+###
+GET http://localhost:5000/screen/1
+
+###
+POST http://localhost:5000/screen
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNDUyNTM3OH0.ppHucNCsKIaXBIIqGWVr7ZsE25-rK6boIqezdUGRlJk
+
+{
+
+    "name": "Calvin Hyacinth",
+    "username": "chyacin317",
+    "telephone": "0781843810"
+
+}
+
+###
+POST http://localhost:5000/screen
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTYyNDUyNTQ2NX0.8M-kdsUe8fW8JF6jVNTZs5buX1xDXNglSF1rtCnVjds
+
+{
+
+    "name": "Thomas Dietrich",
+    "username": "tomtom",
+    "telephone": "0755581045"
+
+}
+
+###
+PUT http://localhost:5000/screen/1
+Content-Type: application/json
+
+{
+
+    "username": "ch"
+
+}
+
+
+###
+DELETE http://localhost:5000/screen/1
+
