@@ -185,7 +185,7 @@ DROP TABLE IF EXISTS `langues`;
 
 CREATE TABLE `langues` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `langueName` varchar(255) NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
