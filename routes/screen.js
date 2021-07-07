@@ -153,4 +153,41 @@ screenRoutes.post('/:candidate_id/hardSkills', (req, res) => {
       }
     });
 });
+
+// Candidate's value routes
+screenRoutes.get('/:candidate_id/values', (req, res) => {
+  const candidateId = req.params.candidate_id;
+  db.query(' SELECT name, username, valueName FROM candidates INNER JOIN candidate_value ON candidates.id=candidate_value.candidate_id INNER JOIN my_values ON candidate_value.value_id=my_values.id ORDER BY name, username, valueName',
+    [candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+});
+
+screenRoutes.post('/:candidate_id/values', (req, res) => {
+  const candidateValue = {
+    value_id: req.body.value_id,
+  };
+  const candidateId = req.params.candidate_id;
+  db.query('INSERT INTO candidate_value(value_id, candidate_id) VALUES (?, ?)',
+    [candidateValue.value_id, candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error saving Candidate value');
+      } else {
+        const updatedCandidateValue = {
+          id: results.insertId,
+          candidateId,
+          valueId: candidateValue.value_id,
+        };
+        res.status(201).send(updatedCandidateValue);
+      }
+    });
+});
 module.exports = screenRoutes;

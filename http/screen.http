@@ -7,7 +7,7 @@ GET http://localhost:5000/screen/1
 ###
 POST http://localhost:5000/screen
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNTY0OTA0M30.TKtmE131k0bo7LEgQrPCkolTEUAPmDoWFudKgfdsTNM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNTY1MTc4M30.h7dL-2p2Vltg5aPOu6lmsnpTMTq8k5R6c1vaBQWXyf8
 
 {
 
@@ -20,7 +20,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6M
 ###
 POST http://localhost:5000/screen
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTYyNDUyNTQ2NX0.8M-kdsUe8fW8JF6jVNTZs5buX1xDXNglSF1rtCnVjds
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNTY1MTc4M30.h7dL-2p2Vltg5aPOu6lmsnpTMTq8k5R6c1vaBQWXyf8
 
 {
 
