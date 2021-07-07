@@ -1,0 +1,24 @@
+###
+GET http://localhost:5000/hardSkills
+
+###
+GET http://localhost:5000/hardSkills/1
+
+###
+POST http://localhost:5000/hardSkills
+Content-Type: application/json
+
+{
+    "hardSkillsName":  "gift"
+}
+
+###
+GET http://localhost:5000/screen/1/hardSkills
+
+###
+POST http://localhost:5000/screen/1/hardSkills
+Content-Type: application/json
+
+{
+    "hardSkill_id":  "1"
+}

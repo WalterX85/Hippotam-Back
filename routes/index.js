@@ -4,11 +4,13 @@ const userRoutes = require('./users');
 const screenRoutes = require('./screen');
 const loginRoute = require('./login');
 const softskillRoutes = require('./softskills');
+const hardSkillsRoutes = require('./hardSkills');
 
 routes.use('/users', userRoutes);
 routes.use('/screen', screenRoutes);
 routes.use('/login', loginRoute);
 routes.use('/softskills', softskillRoutes);
+routes.use('/hardSkills', hardSkillsRoutes);
 
 // define the index route
 routes.get('/', (req, res) => {

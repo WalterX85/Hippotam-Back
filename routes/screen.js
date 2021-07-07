@@ -77,6 +77,7 @@ screenRoutes.delete('/:id', (req, res) => (
   })
 ));
 
+// Candidate's soft skills routes
 screenRoutes.get('/:candidate_id/softskills', (req, res) => {
   const candidateId = req.params.candidate_id;
   db.query('SELECT name, username, softskills FROM candidates INNER JOIN candidate_softskill ON candidates.id=candidate_softskill.candidate_id INNER JOIN softskills ON candidate_softskill.softskill_id=softskills.id ORDER BY name, username, softskills',
@@ -112,6 +113,43 @@ screenRoutes.post('/:candidate_id/softskills', (req, res) => {
           softskillId: candidateSkills.softskill_id,
         };
         res.status(201).send(updatedCandidateSkills);
+      }
+    });
+});
+
+// Candidate's hard skills routes
+screenRoutes.get('/:candidate_id/hardSkills', (req, res) => {
+  const candidateId = req.params.candidate_id;
+  db.query('SELECT candidates.name, candidates.username, hardSkills.hardSkillsName FROM candidates INNER JOIN candidate_hardSkills ON candidates.id=candidate_hardSkills.candidate_id INNER JOIN hardSkills ON candidate_hardSkills.hardSkill_id=hardSkills.id ORDER BY candidates.name, candidates.username, hardSkills.hardSkillsName',
+    [candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+});
+
+screenRoutes.post('/:candidate_id/hardSkills', (req, res) => {
+  const candidateHardSkills = {
+    hardSkill_id: req.body.hardSkill_id,
+  };
+  const candidateId = req.params.candidate_id;
+  db.query('INSERT INTO candidate_hardSkills(hardSkill_id, candidate_id) VALUES (?, ?)',
+    [candidateHardSkills.hardSkill_id, candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error saving Candidate hardskills');
+      } else {
+        const updatedCandidateHardSkills = {
+          id: results.insertId,
+          candidateId,
+          softskillId: candidateHardSkills.hardskill_id,
+        };
+        res.status(201).send(updatedCandidateHardSkills);
       }
     });
 });
