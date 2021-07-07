@@ -147,7 +147,7 @@ screenRoutes.post('/:candidate_id/hardSkills', (req, res) => {
         const updatedCandidateHardSkills = {
           id: results.insertId,
           candidateId,
-          softskillId: candidateHardSkills.hardskill_id,
+          hardSkillsId: candidateHardSkills.hardskill_id,
         };
         res.status(201).send(updatedCandidateHardSkills);
       }
@@ -190,4 +190,42 @@ screenRoutes.post('/:candidate_id/values', (req, res) => {
       }
     });
 });
+
+// Candidate's langue routes
+screenRoutes.get('/:candidate_id/langues', (req, res) => {
+  const candidateId = req.params.candidate_id;
+  db.query('SELECT name, username, langueName FROM candidates INNER JOIN candidate_langues ON candidates.id=candidate_langues.candidate_id INNER JOIN langues ON candidate_langues.langues_id=langues.id ORDER BY name, username, langueName',
+    [candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+});
+
+screenRoutes.post('/:candidate_id/langues', (req, res) => {
+  const candidateLangues = {
+    langues_id: req.body.langues_id,
+  };
+  const candidateId = req.params.candidate_id;
+  db.query('INSERT INTO candidate_langues(langues_id, candidate_id) VALUES (?, ?)',
+    [candidateLangues.langues_id, candidateId],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error saving Candidate langue');
+      } else {
+        const updatedCandidateLangue = {
+          id: results.insertId,
+          candidateId,
+          langueId: candidateLangues.langue_id,
+        };
+        res.status(201).send(updatedCandidateLangue);
+      }
+    });
+});
+
 module.exports = screenRoutes;

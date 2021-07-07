@@ -1,0 +1,16 @@
+###
+GET http://localhost:5000/langues
+
+###
+GET http://localhost:5000/langues/6
+
+###
+GET http://localhost:5000/screen/1/langues
+
+###
+POST http://localhost:5000/screen/1/langues
+Content-Type: application/json
+
+{
+    "langues_id":  "2"
+}
