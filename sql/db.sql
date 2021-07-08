@@ -206,6 +206,32 @@ CREATE TABLE `candidate_hardSkills` (
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
+DROP TABLE IF EXISTS `candidate_strength`;
+
+CREATE TABLE `candidate_strength` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `candidate_id` int NOT NULL,
+    `number` int NOT NULL,
+   `strength` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`),
+  CONSTRAINT FK_CandidateStrength FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `candidate_ambition`;
+
+CREATE TABLE `candidate_ambition` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `candidate_id` int NOT NULL,
+    `number` int NOT NULL,
+   `ambition` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`),
+  CONSTRAINT FK_CandidateAmbition FOREIGN KEY (candidate_id)
+    REFERENCES candidates(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+
+
 
 
 

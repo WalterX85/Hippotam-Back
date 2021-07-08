@@ -7,7 +7,7 @@ GET http://localhost:5000/screen/1
 ###
 POST http://localhost:5000/screen
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNTY4MDE1Mn0.qRr56YXBwmyiy7RJZYQnHkQ2W98rA7H9lKRCOPuVntE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNTc0ODc0N30.AdTyasWGjO98X0ece2YAPGZ5sA4tmoBd8SkPXSMlnVM
 
 {
 

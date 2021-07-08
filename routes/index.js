@@ -9,6 +9,8 @@ const myValuesRoutes = require('./values');
 const languesRoutes = require('./langues');
 const recommendationsRoutes = require('./recommendations');
 const whatElseRoutes = require('./whatelse');
+const strengthRoutes = require('./strength');
+const ambitionRoutes = require('./ambition');
 
 routes.use('/users', userRoutes);
 routes.use('/screen', screenRoutes);
@@ -19,6 +21,8 @@ routes.use('/screen', myValuesRoutes);
 routes.use('/screen', languesRoutes);
 routes.use('/screen', recommendationsRoutes);
 routes.use('/screen', whatElseRoutes);
+routes.use('/screen', strengthRoutes);
+routes.use('/screen', ambitionRoutes);
 
 // define the index route
 routes.get('/', (req, res) => {
