@@ -1,10 +1,4 @@
 ###
-GET http://localhost:5000/values
-
-###
-GET http://localhost:5000/values/6
-
-###
 GET http://localhost:5000/screen/1/values
 
 ###
@@ -12,5 +6,31 @@ POST http://localhost:5000/screen/1/values
 Content-Type: application/json
 
 {
-    "value_id":  "2"
+
+    "number":  "1",
+    "valueName": "hard working"
+
+}
+
+
+###
+POST http://localhost:5000/screen/1/values
+Content-Type: application/json
+
+{
+
+    "number":  "2",
+    "valueName": "team spirit"
+    
+}
+
+###
+POST http://localhost:5000/screen/1/values
+Content-Type: application/json
+
+{
+
+    "number":  "3",
+    "valueName": "values"
+    
 }
