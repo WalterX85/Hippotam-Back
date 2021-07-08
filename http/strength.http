@@ -1,0 +1,34 @@
+
+###
+GET http://localhost:5000/screen/1/strength
+
+
+###
+POST http://localhost:5000/screen/1/strength
+Content-Type: application/json
+
+{
+    "number":  "1",
+    "strength":"Dutch"
+}
+
+###
+POST http://localhost:5000/screen/1/strength
+Content-Type: application/json
+
+{
+    "number":  "2",
+    "strength":"French"
+}
+
+###
+POST http://localhost:5000/screen/1/strength
+Content-Type: application/json
+
+{
+    "number":  "3",
+    "strength":"English"
+}
+
+###
+DELETE http://localhost:5000/screen/1/strength/1

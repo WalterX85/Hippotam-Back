@@ -1,0 +1,34 @@
+
+###
+GET http://localhost:5000/screen/1/ambition
+
+
+###
+POST http://localhost:5000/screen/1/ambition
+Content-Type: application/json
+
+{
+    "number":  "1",
+    "ambition":"Dutch"
+}
+
+###
+POST http://localhost:5000/screen/1/ambition
+Content-Type: application/json
+
+{
+    "number":  "2",
+    "ambition":"French"
+}
+
+###
+POST http://localhost:5000/screen/1/ambition
+Content-Type: application/json
+
+{
+    "number":  "3",
+    "ambition":"English"
+}
+
+###
+DELETE http://localhost:5000/screen/1/ambition/1
