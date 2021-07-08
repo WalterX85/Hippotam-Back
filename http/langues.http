@@ -2,13 +2,14 @@
 ###
 GET http://localhost:5000/screen/1/langues
 
+
 ###
 POST http://localhost:5000/screen/1/langues
 Content-Type: application/json
 
 {
     "number":  "1",
-    "langueName":"Spanish"
+    "langueName":"Dutch"
 }
 
 ###
@@ -28,3 +29,6 @@ Content-Type: application/json
     "number":  "3",
     "langueName":"English"
 }
+
+###
+DELETE http://localhost:5000/screen/1/langues/1

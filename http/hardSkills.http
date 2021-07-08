@@ -1,8 +1,6 @@
 ###
 GET http://localhost:5000/screen/1/hardSkills
 
-###
-GET http://localhost:5000/screen/1/candidate_hardSkills/number
 
 ###
 POST http://localhost:5000/screen/1/hardSkills
@@ -10,7 +8,7 @@ Content-Type: application/json
 
 {
     "number":  "1",
-    "hardSkillsName":"Project Mangement"
+    "hardSkillsName":"Project"
 }
 
 ###
@@ -31,15 +29,6 @@ Content-Type: application/json
     "hardSkillsName":"Accounts"
 }
 
-###
-PUT http://localhost:5000/screen/1/candidate_hardSkills/hardSkillsName
-Content-Type: application/json
-
-{
-   
-    "hardSkillsName": "c"
-
-}
 
 ###
-DELETE http://localhost:5000/screen/1/candidate_hardSkills/1
+DELETE http://localhost:5000/screen/1/hardSkills/1
