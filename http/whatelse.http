@@ -1,0 +1,19 @@
+
+###
+GET http://localhost:5000/screen/1/whatelse
+
+
+###
+POST http://localhost:5000/screen/1/whatelse
+Content-Type: application/json
+
+{
+    "number":  "1",
+    "name":"Communication",
+    "diplome": "Bac +5",
+    "formation": "dd",
+    "lastJob": "McDo"
+}
+
+###
+DELETE http://localhost:5000/screen/1/whatelse/1
