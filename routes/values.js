@@ -18,27 +18,60 @@ myValuesRoutes.get('/:candidate_id/values', (req, res) => {
 });
 
 myValuesRoutes.post('/:candidate_id/values', (req, res) => {
+  const candidateId = req.params.candidate_id;
   const candidateValue = {
     number: req.body.number,
     valueName: req.body.valueName,
   };
-  const candidateId = req.params.candidate_id;
-  db.query('INSERT INTO candidate_value(number, valueName, candidate_id) VALUES (?, ?, ?)',
-    [candidateValue.number, candidateValue.valueName, candidateId],
-    (err, results) => {
-      if (err) {
-        console.log(err);
+  db.query('SELECT valueName FROM candidate_value WHERE candidate_id = ? AND number = ?',
+    [candidateId, candidateValue.number],
+    (selectErr, selectResults) => {
+      if (selectErr) {
         res.status(500).send('Error saving Candidate value');
       } else {
-        const updatedCandidateValue = {
-          id: results.insertId,
-          candidateId,
-          number: candidateValue.number,
-          valueName: candidateValue.valueName,
-        };
-        res.status(201).send(updatedCandidateValue);
+        const valueFromDB = selectResults[0];
+        if (valueFromDB) {
+          const valueToUpdate = req.body;
+          db.query('UPDATE candidate_value SET valueName = ? WHERE candidate_id = ? AND number = ?', [candidateValue.valueName, candidateId, candidateValue.number], (updateErr) => {
+            if (updateErr) {
+              console.log(updateErr);
+              res.status(500).send('Error updating the candidate value');
+            } else {
+              const updated = { ...valueFromDB, ...valueToUpdate };
+              res.status(200).send(updated);
+            }
+          });
+        } else {
+          db.query('INSERT INTO candidate_value(number, valueName, candidate_id) VALUES (?, ?, ?)',
+            [candidateValue.number,
+              candidateValue.valueName,
+              candidateId],
+            (err, insertResults) => {
+              if (err) {
+                console.log(err);
+                res.status(500).send('Errors saving Candidate value');
+              } else {
+                const updatedCandidateValue = {
+                  id: insertResults.insertId,
+                  candidateId,
+                  number: candidateValue.number,
+                  valueName: candidateValue.valueName,
+                };
+                res.status(201).send(updatedCandidateValue);
+              }
+            });
+        }
       }
     });
+});
+
+myValuesRoutes.delete('/:candidate_id/values/:number', (req, res) => {
+  db.query('DELETE FROM candidate_value WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+    if (err) {
+      res.status(500).send('Error deleting a candidate value');
+    } else if (results.affectedRows) res.status(200).send(' 🎉candidate value deleted');
+    else res.status(404).send('candidate value not found');
+  });
 });
 
 module.exports = myValuesRoutes;

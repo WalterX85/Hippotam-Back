@@ -34,3 +34,6 @@ Content-Type: application/json
     "valueName": "values"
     
 }
+
+###
+DELETE http://localhost:5000/screen/1/values/1
