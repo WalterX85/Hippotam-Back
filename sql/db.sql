@@ -79,6 +79,7 @@ DROP TABLE IF EXISTS `photos`;
 CREATE TABLE `photos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `candidate_id` int NOT NULL,
+  `number` int NOT NULL,
   `photo` BLOB,
   PRIMARY KEY(`id`),
    CONSTRAINT FK_PhotosCandidate FOREIGN KEY (candidate_id)
@@ -143,7 +144,7 @@ DROP TABLE IF EXISTS `candidate_pop`;
    `id` int NOT NULL AUTO_INCREMENT,
    `candidate_id` int NOT NULL,
    `number` int NOT NULL,
-   `name` varchar(255) NOT NULL,
+   `title` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
   CONSTRAINT FK_CandidatePOP FOREIGN KEY (candidate_id)
@@ -184,7 +185,7 @@ CREATE TABLE `candidate_recommendations` (
    `id` int NOT NULL AUTO_INCREMENT,
    `candidate_id` int NOT NULL,
     `number` int NOT NULL,
-   `name` varchar(255) NOT NULL,
+   `title` varchar(255) NOT NULL,
    `location` varchar(255) NOT NULL,
    `messageText` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),

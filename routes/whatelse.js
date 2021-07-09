@@ -4,7 +4,6 @@ const whatElseRoutes = require('express').Router();
 
 const db = require('../db-config');
 
-// Candidate's langue routes
 whatElseRoutes.get('/:candidate_id/whatelse', (req, res) => {
   const candidateId = req.params.candidate_id;
   db.query('SELECT name, username, number, diplome, formation, lastJob FROM candidates JOIN candidate_whatElse ON candidates.id=candidate_whatElse.candidate_id ORDER BY name, username, number, name, diplome, formation, lastJob',
