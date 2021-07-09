@@ -43,7 +43,7 @@ softskillRoutes.post('/:candidate_id/softskills', verifyToken, (req, res) => {
             }
           });
         } else {
-          db.query('INSERT INTO candidate_softskills(number, softskills, candidate_id) VALUES (?, ?, ?)',
+          db.query('INSERT INTO candidate_softskill(number, softskills, candidate_id) VALUES (?, ?, ?)',
             [candidateSoftskills.number,
               candidateSoftskills.softskills,
               candidateId],
@@ -56,7 +56,7 @@ softskillRoutes.post('/:candidate_id/softskills', verifyToken, (req, res) => {
                   id: insertResults.insertId,
                   candidateId,
                   number: candidateSoftskills.number,
-                  langueName: candidateSoftskills.softskills,
+                  softskills: candidateSoftskills.softskills,
                 };
                 res.status(201).send(updatedCandidateSoftskills);
               }
