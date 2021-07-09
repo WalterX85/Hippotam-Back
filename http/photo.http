@@ -1,0 +1,33 @@
+###
+GET http://localhost:5000/screen/1/photos
+
+###
+POST http://localhost:5000/screen/1/photos
+Content-Type: application/json
+
+{
+    "number":"1",
+    "photo": "jpeg"
+    
+}
+###
+POST http://localhost:5000/screen/1/photos
+Content-Type: application/json
+
+{
+    "number":"2",
+    "photo": "jpeg"
+    
+}
+###
+POST http://localhost:5000/screen/1/photos
+Content-Type: application/json
+
+{
+    "number":"3",
+    "photo": "jpeg"
+    
+}
+
+###
+DELETE http://localhost:5000/screen/1/photos/1

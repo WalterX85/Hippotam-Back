@@ -1,4 +1,5 @@
 const routes = require('express').Router();
+const express = require('express');
 
 const userRoutes = require('./users');
 const screenRoutes = require('./screen');
@@ -11,6 +12,9 @@ const recommendationsRoutes = require('./recommendations');
 const whatElseRoutes = require('./whatelse');
 const strengthRoutes = require('./strength');
 const ambitionRoutes = require('./ambition');
+const popRoutes = require('./pop');
+const photoRoutes = require('./photo');
+const uploadRoutes = require('./upload');
 
 routes.use('/users', userRoutes);
 routes.use('/screen', screenRoutes);
@@ -23,6 +27,10 @@ routes.use('/screen', recommendationsRoutes);
 routes.use('/screen', whatElseRoutes);
 routes.use('/screen', strengthRoutes);
 routes.use('/screen', ambitionRoutes);
+routes.use('/screen', popRoutes);
+routes.use('/screen', photoRoutes);
+routes.use('/upload', uploadRoutes);
+routes.use('/uploads', express.static('uploads'));
 
 // define the index route
 routes.get('/', (req, res) => {

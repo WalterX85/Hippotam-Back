@@ -9,7 +9,6 @@ Content-Type: application/json
 
 {
     "number":  "1",
-    "name":"Communication",
     "diplome": "Bac +5",
     "formation": "dd",
     "lastJob": "McDo"
