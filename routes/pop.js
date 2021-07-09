@@ -6,6 +6,8 @@ const upload = multer({ dest: `${__dirname}/public/uploads/` });
 const fs = require('fs');
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 popRoutes.get('/:candidate_id/pop', (req, res) => {
   const candidateId = req.params.candidate_id;
   db.query('SELECT name, username, number, location, title FROM candidates JOIN candidate_pop ON candidates.id=candidate_pop.candidate_id ORDER BY name, username, number, location, title',
@@ -20,7 +22,7 @@ popRoutes.get('/:candidate_id/pop', (req, res) => {
     });
 });
 
-popRoutes.post('/:candidate_id/pop', upload.single('blob'), (req, res) => {
+popRoutes.post('/:candidate_id/pop', verifyToken, upload.single('blob'), (req, res) => {
   fs.renameSync(req.file.path,
     `public/uploads/${req.file.filename}.wav`);
   const candidateId = req.params.candidate_id;
@@ -74,7 +76,7 @@ popRoutes.post('/:candidate_id/pop', upload.single('blob'), (req, res) => {
     });
 });
 
-popRoutes.delete('/:candidate_id/pop/:number', (req, res) => {
+popRoutes.delete('/:candidate_id/pop/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_pop WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate project');

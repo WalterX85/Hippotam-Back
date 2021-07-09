@@ -6,6 +6,8 @@ const upload = multer({ dest: `${__dirname}/public/photos/` });
 const fs = require('fs');
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 photoRoutes.get('/:candidate_id/photos', (req, res) => {
   const candidateId = req.params.candidate_id;
   db.query('SELECT name, username, number, photo FROM candidates JOIN photos ON candidates.id=photos.candidate_id ORDER BY name, username, number, name, photo',
@@ -20,7 +22,7 @@ photoRoutes.get('/:candidate_id/photos', (req, res) => {
     });
 });
 
-photoRoutes.post('/:candidate_id/photos', upload.single('blob'), (req, res) => {
+photoRoutes.post('/:candidate_id/photos', verifyToken, upload.single('blob'), (req, res) => {
   fs.renameSync(req.file.path,
     `public/photos/${req.file.filename}.wav`);
   const candidateId = req.params.candidate_id;
@@ -71,7 +73,7 @@ photoRoutes.post('/:candidate_id/photos', upload.single('blob'), (req, res) => {
     });
 });
 
-photoRoutes.delete('/:candidate_id/photos/:number', (req, res) => {
+photoRoutes.delete('/:candidate_id/photos/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM photos WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate photo');

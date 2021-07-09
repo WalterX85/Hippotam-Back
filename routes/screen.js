@@ -45,7 +45,7 @@ screenRoutes.post('/', verifyToken, (req, res) => {
   });
 });
 
-screenRoutes.put('/:id', (req, res) => {
+screenRoutes.put('/:id', verifyToken, (req, res) => {
   const candidateId = req.params.id;
   db.query('SELECT * FROM candidates WHERE id = ?', [candidateId], (selectErr, results) => {
     if (selectErr) {
@@ -67,7 +67,7 @@ screenRoutes.put('/:id', (req, res) => {
   });
 });
 
-screenRoutes.delete('/:id', (req, res) => (
+screenRoutes.delete('/:id', verifyToken, (req, res) => (
   db.query('DELETE FROM candidates WHERE id = ?', [req.params.id], (err, results) => {
     if (err) {
       console.log(err);

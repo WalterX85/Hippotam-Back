@@ -1,6 +1,7 @@
 const strengthRoutes = require('express').Router();
 
 const db = require('../db-config');
+const { verifyToken } = require('../middlewares/auth');
 
 // Candidate's ambition routes
 strengthRoutes.get('/:candidate_id/strength', (req, res) => {
@@ -17,7 +18,7 @@ strengthRoutes.get('/:candidate_id/strength', (req, res) => {
     });
 });
 
-strengthRoutes.post('/:candidate_id/strength', (req, res) => {
+strengthRoutes.post('/:candidate_id/strength', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateStrength = {
     number: req.body.number,
@@ -65,7 +66,7 @@ strengthRoutes.post('/:candidate_id/strength', (req, res) => {
     });
 });
 
-strengthRoutes.delete('/:candidate_id/strength/:number', (req, res) => {
+strengthRoutes.delete('/:candidate_id/strength/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_strength WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate strength');

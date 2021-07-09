@@ -2,6 +2,8 @@ const hardSkillsRoutes = require('express').Router();
 
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 // Candidate's hard skills routes
 hardSkillsRoutes.get('/:candidate_id/hardSkills', (req, res) => {
   const candidateId = req.params.candidate_id;
@@ -17,7 +19,7 @@ hardSkillsRoutes.get('/:candidate_id/hardSkills', (req, res) => {
     });
 });
 
-hardSkillsRoutes.post('/:candidate_id/hardSkills', (req, res) => {
+hardSkillsRoutes.post('/:candidate_id/hardSkills', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateHardSkills = {
     number: req.body.number,
@@ -65,7 +67,7 @@ hardSkillsRoutes.post('/:candidate_id/hardSkills', (req, res) => {
     });
 });
 
-hardSkillsRoutes.delete('/:candidate_id/hardSkills/:number', (req, res) => {
+hardSkillsRoutes.delete('/:candidate_id/hardSkills/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_hardSkills WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate hard skills');

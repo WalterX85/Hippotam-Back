@@ -3,6 +3,7 @@ const whatElseRoutes = require('express').Router();
 // Candidate's what else routes
 
 const db = require('../db-config');
+const { verifyToken } = require('../middlewares/auth');
 
 whatElseRoutes.get('/:candidate_id/whatelse', (req, res) => {
   const candidateId = req.params.candidate_id;
@@ -18,7 +19,7 @@ whatElseRoutes.get('/:candidate_id/whatelse', (req, res) => {
     });
 });
 
-whatElseRoutes.post('/:candidate_id/whatelse', (req, res) => {
+whatElseRoutes.post('/:candidate_id/whatelse', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateWhatElse = {
     number: req.body.number,
@@ -71,7 +72,7 @@ whatElseRoutes.post('/:candidate_id/whatelse', (req, res) => {
     });
 });
 
-whatElseRoutes.delete('/:candidate_id/whatelse/:number', (req, res) => {
+whatElseRoutes.delete('/:candidate_id/whatelse/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_whatElse WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate what else');
