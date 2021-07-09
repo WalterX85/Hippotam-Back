@@ -30,14 +30,13 @@ userRoutes.get('/:id', (req, res) => {
 userRoutes.post('/', hashPassword, (req, res) => {
   const user = {
     email: req.body.email,
-    role_id: req.body.role_id,
     password: req.body.password,
     name: req.body.name,
     username: req.body.username,
     telephone: req.body.telephone,
   };
 
-  db.query('INSERT INTO users ( email, role_id, password, name, username, telephone) VALUES (?, ?, ?, ?, ?, ?)', [user.email, user.role_id, user.password, user.name, user.username, user.telephone], (err, results) => {
+  db.query('INSERT INTO users ( email, password, name, username, telephone) VALUES (?, ?, ?, ?, ?)', [user.email, user.password, user.name, user.username, user.telephone], (err, results) => {
     if (err) {
       console.log(err);
       res.status(500);

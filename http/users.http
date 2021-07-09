@@ -10,7 +10,6 @@ Content-Type: application/json
 
 {
     "email": "encore317@hotmail.com",
-    "role_id": "1",
     "password": "johnbai",
     "name":"Calvin Hyacinth",
     "username":"chyacin317",
@@ -24,7 +23,6 @@ Content-Type: application/json
 
 {
     "email": "thomas1@hotmail.com",
-    "role_id": "1",
     "password": "diebai",
     "name":"Thomas Dietrich",
     "username":"tomtom",
