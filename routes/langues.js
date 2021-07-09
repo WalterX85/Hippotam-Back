@@ -2,6 +2,8 @@ const languesRoutes = require('express').Router();
 
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 // Candidate's langue routes
 languesRoutes.get('/:candidate_id/langues', (req, res) => {
   const candidateId = req.params.candidate_id;
@@ -17,7 +19,7 @@ languesRoutes.get('/:candidate_id/langues', (req, res) => {
     });
 });
 
-languesRoutes.post('/:candidate_id/langues', (req, res) => {
+languesRoutes.post('/:candidate_id/langues', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateLangues = {
     number: req.body.number,
@@ -65,7 +67,7 @@ languesRoutes.post('/:candidate_id/langues', (req, res) => {
     });
 });
 
-languesRoutes.delete('/:candidate_id/langues/:number', (req, res) => {
+languesRoutes.delete('/:candidate_id/langues/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_langues WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate language');

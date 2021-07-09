@@ -2,6 +2,8 @@ const ambitionRoutes = require('express').Router();
 
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 // Candidate's ambition routes
 ambitionRoutes.get('/:candidate_id/ambition', (req, res) => {
   const candidateId = req.params.candidate_id;
@@ -17,7 +19,7 @@ ambitionRoutes.get('/:candidate_id/ambition', (req, res) => {
     });
 });
 
-ambitionRoutes.post('/:candidate_id/ambition', (req, res) => {
+ambitionRoutes.post('/:candidate_id/ambition', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateAmbition = {
     number: req.body.number,
@@ -65,7 +67,7 @@ ambitionRoutes.post('/:candidate_id/ambition', (req, res) => {
     });
 });
 
-ambitionRoutes.delete('/:candidate_id/ambition/:number', (req, res) => {
+ambitionRoutes.delete('/:candidate_id/ambition/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_ambition WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate ambition');

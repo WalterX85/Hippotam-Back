@@ -2,6 +2,8 @@ const myValuesRoutes = require('express').Router();
 
 const db = require('../db-config');
 
+const { verifyToken } = require('../middlewares/auth');
+
 // Candidate's value routes
 myValuesRoutes.get('/:candidate_id/values', (req, res) => {
   const candidateId = req.params.candidate_id;
@@ -17,7 +19,7 @@ myValuesRoutes.get('/:candidate_id/values', (req, res) => {
     });
 });
 
-myValuesRoutes.post('/:candidate_id/values', (req, res) => {
+myValuesRoutes.post('/:candidate_id/values', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateValue = {
     number: req.body.number,
@@ -65,7 +67,7 @@ myValuesRoutes.post('/:candidate_id/values', (req, res) => {
     });
 });
 
-myValuesRoutes.delete('/:candidate_id/values/:number', (req, res) => {
+myValuesRoutes.delete('/:candidate_id/values/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_value WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate value');

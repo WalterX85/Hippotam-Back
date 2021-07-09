@@ -1,6 +1,7 @@
 const softskillRoutes = require('express').Router();
 
 const db = require('../db-config');
+const { verifyToken } = require('../middlewares/auth');
 
 // Candidate's soft skills routes
 softskillRoutes.get('/:candidate_id/softskills', (req, res) => {
@@ -17,7 +18,7 @@ softskillRoutes.get('/:candidate_id/softskills', (req, res) => {
     });
 });
 
-softskillRoutes.post('/:candidate_id/softskills', (req, res) => {
+softskillRoutes.post('/:candidate_id/softskills', verifyToken, (req, res) => {
   const candidateId = req.params.candidate_id;
   const candidateSoftskills = {
     number: req.body.number,
@@ -65,7 +66,7 @@ softskillRoutes.post('/:candidate_id/softskills', (req, res) => {
     });
 });
 
-softskillRoutes.delete('/:candidate_id/softskills/:number', (req, res) => {
+softskillRoutes.delete('/:candidate_id/softskills/:number', verifyToken, (req, res) => {
   db.query('DELETE FROM candidate_softskill WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
     if (err) {
       res.status(500).send('Error deleting a candidate soft skills');
