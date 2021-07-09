@@ -3,34 +3,16 @@ CREATE DATABASE personality;
 
 USE personality;
 
-DROP TABLE IF EXISTS `role`;
-
-CREATE TABLE `role` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,  
-  PRIMARY KEY(`id`)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
-INSERT INTO 
- `role`
-VALUES
-  (1, 'candidate'),
-  (2, 'admin'),
-  (3, 'recruteur');
-
 DROP TABLE IF EXISTS  `users`;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `role_id` int NOT NULL,
   `email` varchar(100) NOT NULL UNIQUE,  
   `password` varchar(95) NOT NULL,
   `name` varchar(100) NOT NULL,
  `username` varchar(100) NOT NULL,
  `telephone` varchar(100) NOT NUll,
-  PRIMARY KEY(`id`),
-  CONSTRAINT FK_UserRole FOREIGN KEY (role_id)
-    REFERENCES role(id)
+  PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
@@ -47,20 +29,6 @@ CREATE TABLE `candidates` (
     REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
-
-DROP TABLE IF EXISTS `recruteur`;
-
-CREATE TABLE `recruteur` (
- `id` int NOT NULL AUTO_INCREMENT,
- `user_id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
- `companyName` varchar(100) NOT NULL,
- `username` varchar(100) NOT NULL,
- `phone` varchar(100) NOT NULL,
-  PRIMARY KEY(`id`),
-   CONSTRAINT FK_RecruteurCandidate FOREIGN KEY (user_id)
-    REFERENCES users(id)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS `login`;
 
