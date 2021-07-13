@@ -1,14 +1,14 @@
 const whatElseRoutes = require('express').Router();
 
-// Candidate's what else routes
+// user's what else routes
 
 const db = require('../db-config');
 const { verifyToken } = require('../middlewares/auth');
 
-whatElseRoutes.get('/:candidate_id/whatelse', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query('SELECT name, username, number, diplome, formation, lastJob FROM candidates JOIN candidate_whatElse ON candidates.id=candidate_whatElse.candidate_id ORDER BY name, username, number, name, diplome, formation, lastJob',
-    [candidateId],
+whatElseRoutes.get('/:user_id/whatelse', (req, res) => {
+  const userId = req.params.user_id;
+  db.query('SELECT name, username, number, diplome, formation, lastJob FROM users JOIN whatElse ON users.id=whatElse.user_id ORDER BY name, username, number, name, diplome, formation, lastJob',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -19,52 +19,52 @@ whatElseRoutes.get('/:candidate_id/whatelse', (req, res) => {
     });
 });
 
-whatElseRoutes.post('/:candidate_id/whatelse', verifyToken, (req, res) => {
-  const candidateId = req.params.candidate_id;
-  const candidateWhatElse = {
+whatElseRoutes.post('/:user_id/whatelse', verifyToken, (req, res) => {
+  const userId = req.params.user_id;
+  const userWhatElse = {
     number: req.body.number,
     diplome: req.body.diplome,
     formation: req.body.formation,
     lastJob: req.body.lastJob,
   };
-  db.query('SELECT * FROM candidate_whatElse WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidateWhatElse.number],
+  db.query('SELECT * FROM whatElse WHERE user_id = ? AND number = ?',
+    [userId, userWhatElse.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error saving Candidate what else');
+        res.status(500).send('Error saving user what else');
       } else {
         const whatElseFromDB = selectResults[0];
         if (whatElseFromDB) {
           const whatElseToUpdate = req.body;
-          db.query('UPDATE candidate_whatElse SET candidateWhatElse = ? WHERE candidate_id = ? AND number = ?', [candidateWhatElse, candidateId, candidateWhatElse.number], (updateErr) => {
+          db.query('UPDATE whatElse SET userWhatElse = ? WHERE user_id = ? AND number = ?', [userWhatElse, userId, userWhatElse.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the Candidate whatelse');
+              res.status(500).send('Error updating the user whatelse');
             } else {
               const updated = { ...whatElseFromDB, ...whatElseToUpdate };
               res.status(200).send(updated);
             }
           });
         } else {
-          db.query('INSERT INTO candidate_whatElse(number, diplome, formation, lastJob, candidate_id) VALUES (?, ?, ?, ?, ?)',
-            [candidateWhatElse.number,
-              candidateWhatElse.diplome,
-              candidateWhatElse.formation,
-              candidateWhatElse.lastJob,
-              candidateId],
+          db.query('INSERT INTO whatElse(number, diplome, formation, lastJob, user_id) VALUES (?, ?, ?, ?, ?)',
+            [userWhatElse.number,
+              userWhatElse.diplome,
+              userWhatElse.formation,
+              userWhatElse.lastJob,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Error saving Candidate value');
+                res.status(500).send('Error saving user value');
               } else {
-                const updatedCandidateWhatElse = {
+                const updatedUserWhatElse = {
                   id: insertResults.insertId,
-                  candidateId,
-                  diplome: candidateWhatElse.diplome,
-                  formation: candidateWhatElse.formation,
-                  lastJob: candidateWhatElse.lastJob,
+                  userId,
+                  diplome: userWhatElse.diplome,
+                  formation: userWhatElse.formation,
+                  lastJob: userWhatElse.lastJob,
                 };
-                res.status(201).send(updatedCandidateWhatElse);
+                res.status(201).send(updatedUserWhatElse);
               }
             });
         }
@@ -72,12 +72,12 @@ whatElseRoutes.post('/:candidate_id/whatelse', verifyToken, (req, res) => {
     });
 });
 
-whatElseRoutes.delete('/:candidate_id/whatelse/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM candidate_whatElse WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+whatElseRoutes.delete('/:user_id/whatelse/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM whatElse WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate what else');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate what else deleted');
-    else res.status(404).send('candidate what else not found');
+      res.status(500).send('Error deleting a user what else');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user what else deleted');
+    else res.status(404).send('user what else not found');
   });
 });
 
