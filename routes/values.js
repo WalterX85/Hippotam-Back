@@ -4,11 +4,11 @@ const db = require('../db-config');
 
 const { verifyToken } = require('../middlewares/auth');
 
-// Candidate's value routes
-myValuesRoutes.get('/:candidate_id/values', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query('SELECT name, username, number, valueName FROM candidates JOIN candidate_value ON candidates.id=candidate_value.candidate_id ORDER BY name, username, number, valueName',
-    [candidateId],
+// user's value routes
+myValuesRoutes.get('/:user_id/values', (req, res) => {
+  const userId = req.params.user_id;
+  db.query('SELECT name, username, number, valueName FROM users JOIN value ON users.id=value.user_id ORDER BY name, username, number, valueName',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -19,47 +19,47 @@ myValuesRoutes.get('/:candidate_id/values', (req, res) => {
     });
 });
 
-myValuesRoutes.post('/:candidate_id/values', verifyToken, (req, res) => {
-  const candidateId = req.params.candidate_id;
-  const candidateValue = {
+myValuesRoutes.post('/:user_id/values', verifyToken, (req, res) => {
+  const userId = req.params.user_id;
+  const userValue = {
     number: req.body.number,
     valueName: req.body.valueName,
   };
-  db.query('SELECT valueName FROM candidate_value WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidateValue.number],
+  db.query('SELECT valueName FROM value WHERE user_id = ? AND number = ?',
+    [userId, userValue.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error saving Candidate value');
+        res.status(500).send('Error saving user value');
       } else {
         const valueFromDB = selectResults[0];
         if (valueFromDB) {
           const valueToUpdate = req.body;
-          db.query('UPDATE candidate_value SET valueName = ? WHERE candidate_id = ? AND number = ?', [candidateValue.valueName, candidateId, candidateValue.number], (updateErr) => {
+          db.query('UPDATE value SET valueName = ? WHERE user_id = ? AND number = ?', [userValue.valueName, userId, userValue.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the candidate value');
+              res.status(500).send('Error updating the user value');
             } else {
               const updated = { ...valueFromDB, ...valueToUpdate };
               res.status(200).send(updated);
             }
           });
         } else {
-          db.query('INSERT INTO candidate_value(number, valueName, candidate_id) VALUES (?, ?, ?)',
-            [candidateValue.number,
-              candidateValue.valueName,
-              candidateId],
+          db.query('INSERT INTO value(number, valueName, user_id) VALUES (?, ?, ?)',
+            [userValue.number,
+              userValue.valueName,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Errors saving Candidate value');
+                res.status(500).send('Errors saving user value');
               } else {
-                const updatedCandidateValue = {
+                const updateduserValue = {
                   id: insertResults.insertId,
-                  candidateId,
-                  number: candidateValue.number,
-                  valueName: candidateValue.valueName,
+                  userId,
+                  number: userValue.number,
+                  valueName: userValue.valueName,
                 };
-                res.status(201).send(updatedCandidateValue);
+                res.status(201).send(updateduserValue);
               }
             });
         }
@@ -67,12 +67,12 @@ myValuesRoutes.post('/:candidate_id/values', verifyToken, (req, res) => {
     });
 });
 
-myValuesRoutes.delete('/:candidate_id/values/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM candidate_value WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+myValuesRoutes.delete('/:user_id/values/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM value WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate value');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate value deleted');
-    else res.status(404).send('candidate value not found');
+      res.status(500).send('Error deleting a user value');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user value deleted');
+    else res.status(404).send('user value not found');
   });
 });
 
