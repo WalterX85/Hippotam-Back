@@ -4,11 +4,11 @@ const db = require('../db-config');
 
 const { verifyToken } = require('../middlewares/auth');
 
-// Candidate's ambition routes
-ambitionRoutes.get('/:candidate_id/ambition', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query('SELECT name, username, number, ambition FROM candidates JOIN candidate_ambition ON candidates.id=candidate_ambition.candidate_id ORDER BY name, username, number, ambition',
-    [candidateId],
+// user's ambition routes
+ambitionRoutes.get('/:user_id/ambition', (req, res) => {
+  const userId = req.params.user_id;
+  db.query('SELECT name, username, number, ambition FROM users JOIN ambition ON users.id=ambition.user_id ORDER BY name, username, number, ambition',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -19,47 +19,47 @@ ambitionRoutes.get('/:candidate_id/ambition', (req, res) => {
     });
 });
 
-ambitionRoutes.post('/:candidate_id/ambition', verifyToken, (req, res) => {
-  const candidateId = req.params.candidate_id;
-  const candidateAmbition = {
+ambitionRoutes.post('/:user_id/ambition', verifyToken, (req, res) => {
+  const userId = req.params.user_id;
+  const userAmbition = {
     number: req.body.number,
     ambition: req.body.ambition,
   };
-  db.query('SELECT ambition FROM candidate_ambition WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidateAmbition.number],
+  db.query('SELECT ambition FROM ambition WHERE user_id = ? AND number = ?',
+    [userId, userAmbition.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error selecting the candidate ambition');
+        res.status(500).send('Error selecting the user ambition');
       } else {
         const ambitionFromDB = selectResults[0];
         if (ambitionFromDB) {
           const ambitionToUpdate = req.body;
-          db.query('UPDATE candidate_ambition SET ambition = ? WHERE candidate_id = ? AND number = ?', [candidateAmbition.ambition, candidateId, candidateAmbition.number], (updateErr) => {
+          db.query('UPDATE ambition SET userAmbition = ? WHERE user_id = ? AND number = ?', [userAmbition.ambition, userId, userAmbition.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the candidate ambition');
+              res.status(500).send('Error updating the user ambition');
             } else {
               const updated = { ...ambitionFromDB, ...ambitionToUpdate };
               res.status(200).send(updated);
             }
           });
         } else {
-          db.query('INSERT INTO candidate_ambition(number, ambition, candidate_id) VALUES (?, ?, ?)',
-            [candidateAmbition.number,
-              candidateAmbition.ambition,
-              candidateId],
+          db.query('INSERT INTO userAmbition(number, ambition, user_id) VALUES (?, ?, ?)',
+            [userAmbition.number,
+              userAmbition.ambition,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Error saving Candidate ambition');
+                res.status(500).send('Error saving user ambition');
               } else {
-                const updatedCandidateAmbition = {
+                const updatedUserAmbition = {
                   id: insertResults.insertId,
-                  candidateId,
-                  number: candidateAmbition.number,
-                  ambition: candidateAmbition.ambition,
+                  userId,
+                  number: userAmbition.number,
+                  ambition: userAmbition.ambition,
                 };
-                res.status(201).send(updatedCandidateAmbition);
+                res.status(201).send(updatedUserAmbition);
               }
             });
         }
@@ -67,12 +67,12 @@ ambitionRoutes.post('/:candidate_id/ambition', verifyToken, (req, res) => {
     });
 });
 
-ambitionRoutes.delete('/:candidate_id/ambition/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM candidate_ambition WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+ambitionRoutes.delete('/:user_id/ambition/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM ambition WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate ambition');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate ambition deleted');
-    else res.status(404).send('candidate ambition not found');
+      res.status(500).send('Error deleting a user ambition');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user ambition deleted');
+    else res.status(404).send('user ambition not found');
   });
 });
 

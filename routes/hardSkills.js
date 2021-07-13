@@ -4,11 +4,11 @@ const db = require('../db-config');
 
 const { verifyToken } = require('../middlewares/auth');
 
-// Candidate's hard skills routes
-hardSkillsRoutes.get('/:candidate_id/hardSkills', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query(' SELECT candidates.name, candidates.username, number,hardSkillsName FROM candidates JOIN candidate_hardSkills ON candidates.id=candidate_hardSkills.candidate_id ORDER BY candidates.name, candidates.username, number, hardSkillsName',
-    [candidateId],
+// user's hard skills routes
+hardSkillsRoutes.get('/:user_id/hardSkills', (req, res) => {
+  const userId = req.params.user_id;
+  db.query(' SELECT users.name, users.username, number, hardSkillsName FROM users JOIN hardSkills ON users.id=hardSkills.user_id ORDER BY users.name, users.username, number, hardSkillsName',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -19,47 +19,47 @@ hardSkillsRoutes.get('/:candidate_id/hardSkills', (req, res) => {
     });
 });
 
-hardSkillsRoutes.post('/:candidate_id/hardSkills', verifyToken, (req, res) => {
-  const candidateId = req.params.candidate_id;
-  const candidateHardSkills = {
+hardSkillsRoutes.post('/:user_id/hardSkills', verifyToken, (req, res) => {
+  const userId = req.params.user_id;
+  const userHardSkills = {
     number: req.body.number,
     hardSkillsName: req.body.hardSkillsName,
   };
-  db.query('SELECT hardSkillsName FROM candidate_hardSkills WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidateHardSkills.number],
+  db.query('SELECT hardSkillsName FROM hardSkills WHERE user_id = ? AND number = ?',
+    [userId, userHardSkills.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error saving Candidate hardskills');
+        res.status(500).send('Error saving user hardskills');
       } else {
         const hardSkillsFromDB = selectResults[0];
         if (hardSkillsFromDB) {
           const hardSkillsToUpdate = req.body;
-          db.query('UPDATE candidate_hardSkills SET hardSkillsName = ? WHERE candidate_id = ? AND number = ?', [candidateHardSkills.hardSkillsName, candidateId, candidateHardSkills.number], (updateErr) => {
+          db.query('UPDATE hardSkills SET hardSkillsName = ? WHERE user_id = ? AND number = ?', [userHardSkills.hardSkillsName, userId, userHardSkills.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the candidate hard skills');
+              res.status(500).send('Error updating the user hard skills');
             } else {
               const updated = { ...hardSkillsFromDB, ...hardSkillsToUpdate };
               res.status(200).send(updated);
             }
           });
         } else {
-          db.query('INSERT INTO candidate_hardSkills(number, hardSkillsName, candidate_id) VALUES (?, ?, ?)',
-            [candidateHardSkills.number,
-              candidateHardSkills.hardSkillsName,
-              candidateId],
+          db.query('INSERT INTO userHardSkills(number, hardSkillsName, user_id) VALUES (?, ?, ?)',
+            [userHardSkills.number,
+              userHardSkills.hardSkillsName,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Error saving Candidate hardskills');
+                res.status(500).send('Error saving user hardskills');
               } else {
-                const updatedCandidateHardSkills = {
+                const updateduserHardSkills = {
                   id: insertResults.insertId,
-                  candidateId,
-                  number: candidateHardSkills.number,
-                  langueName: candidateHardSkills.hardSkillsName,
+                  userId,
+                  number: userHardSkills.number,
+                  langueName: userHardSkills.hardSkillsName,
                 };
-                res.status(201).send(updatedCandidateHardSkills);
+                res.status(201).send(updateduserHardSkills);
               }
             });
         }
@@ -67,12 +67,12 @@ hardSkillsRoutes.post('/:candidate_id/hardSkills', verifyToken, (req, res) => {
     });
 });
 
-hardSkillsRoutes.delete('/:candidate_id/hardSkills/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM candidate_hardSkills WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+hardSkillsRoutes.delete('/:user_id/hardSkills/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM hardSkills WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate hard skills');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate hard skills deleted');
-    else res.status(404).send('candidate hard skills not found');
+      res.status(500).send('Error deleting a user hard skills');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user hard skills deleted');
+    else res.status(404).send('user hard skills not found');
   });
 });
 

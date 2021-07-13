@@ -4,11 +4,11 @@ const db = require('../db-config');
 
 const { verifyToken } = require('../middlewares/auth');
 
-// Candidate's langue routes
-languesRoutes.get('/:candidate_id/langues', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query('SELECT name, username, number, langueName FROM candidates JOIN candidate_langues ON candidates.id=candidate_langues.candidate_id ORDER BY name, username, number, langueName',
-    [candidateId],
+// user's langue routes
+languesRoutes.get('/:user_id/langues', (req, res) => {
+  const userId = req.params.user_id;
+  db.query('SELECT name, username, number, langueName FROM users JOIN langue ON users.id=langue.user_id ORDER BY name, username, number, langueName',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -19,47 +19,47 @@ languesRoutes.get('/:candidate_id/langues', (req, res) => {
     });
 });
 
-languesRoutes.post('/:candidate_id/langues', verifyToken, (req, res) => {
-  const candidateId = req.params.candidate_id;
-  const candidateLangues = {
+languesRoutes.post('/:user_id/langues', verifyToken, (req, res) => {
+  const userId = req.params.user_id;
+  const userLangues = {
     number: req.body.number,
     langueName: req.body.langueName,
   };
-  db.query('SELECT langueName FROM candidate_langues WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidateLangues.number],
+  db.query('SELECT langueName FROM langue WHERE user_id = ? AND number = ?',
+    [userId, userLangues.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error selecting the candidate language');
+        res.status(500).send('Error selecting the user language');
       } else {
         const langueFromDB = selectResults[0];
         if (langueFromDB) {
           const langueToUpdate = req.body;
-          db.query('UPDATE candidate_langues SET langueName = ? WHERE candidate_id = ? AND number = ?', [candidateLangues.langueName, candidateId, candidateLangues.number], (updateErr) => {
+          db.query('UPDATE langue SET langueName = ? WHERE user_id = ? AND number = ?', [userLangues.langueName, userId, userLangues.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the candidate language');
+              res.status(500).send('Error updating the user language');
             } else {
               const updated = { ...langueFromDB, ...langueToUpdate };
               res.status(200).send(updated);
             }
           });
         } else {
-          db.query('INSERT INTO candidate_langues(number, langueName, candidate_id) VALUES (?, ?, ?)',
-            [candidateLangues.number,
-              candidateLangues.langueName,
-              candidateId],
+          db.query('INSERT INTO langue(number, langueName, user_id) VALUES (?, ?, ?)',
+            [userLangues.number,
+              userLangues.langueName,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Error saving Candidate langue');
+                res.status(500).send('Error saving user langue');
               } else {
-                const updatedCandidateLangue = {
+                const updateduserLangue = {
                   id: insertResults.insertId,
-                  candidateId,
-                  number: candidateLangues.number,
-                  langueName: candidateLangues.langueName,
+                  userId,
+                  number: userLangues.number,
+                  langueName: userLangues.langueName,
                 };
-                res.status(201).send(updatedCandidateLangue);
+                res.status(201).send(updateduserLangue);
               }
             });
         }
@@ -67,12 +67,12 @@ languesRoutes.post('/:candidate_id/langues', verifyToken, (req, res) => {
     });
 });
 
-languesRoutes.delete('/:candidate_id/langues/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM candidate_langues WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+languesRoutes.delete('/:user_id/langues/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM langue WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate language');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate language deleted');
-    else res.status(404).send('candidate language not found');
+      res.status(500).send('Error deleting a user language');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user language deleted');
+    else res.status(404).send('user language not found');
   });
 });
 

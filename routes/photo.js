@@ -8,10 +8,10 @@ const db = require('../db-config');
 
 const { verifyToken } = require('../middlewares/auth');
 
-photoRoutes.get('/:candidate_id/photos', (req, res) => {
-  const candidateId = req.params.candidate_id;
-  db.query('SELECT name, username, number, photo FROM candidates JOIN photos ON candidates.id=photos.candidate_id ORDER BY name, username, number, name, photo',
-    [candidateId],
+photoRoutes.get('/:user_id/photos', (req, res) => {
+  const userId = req.params.user_id;
+  db.query('SELECT name, username, number, photo FROM users JOIN photos ON user.id=photos.user_id ORDER BY name, username, number, name, photo',
+    [userId],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -22,27 +22,27 @@ photoRoutes.get('/:candidate_id/photos', (req, res) => {
     });
 });
 
-photoRoutes.post('/:candidate_id/photos', verifyToken, upload.single('blob'), (req, res) => {
+photoRoutes.post('/:user_id/photos', verifyToken, upload.single('blob'), (req, res) => {
   fs.renameSync(req.file.path,
     `public/photos/${req.file.filename}.wav`);
-  const candidateId = req.params.candidate_id;
-  const candidatePhoto = {
+  const userId = req.params.user_id;
+  const userPhoto = {
     number: req.body.number,
     photo: req.file.filename,
   };
-  db.query('SELECT photo FROM photos WHERE candidate_id = ? AND number = ?',
-    [candidateId, candidatePhoto.number],
+  db.query('SELECT photo FROM photos WHERE user_id = ? AND number = ?',
+    [userId, userPhoto.number],
     (selectErr, selectResults) => {
       if (selectErr) {
-        res.status(500).send('Error selecting the candidate photo');
+        res.status(500).send('Error selecting the user photo');
       } else {
         const photoFromDB = selectResults[0];
         if (photoFromDB) {
           const photoToUpdate = req.body;
-          db.query('UPDATE photos SET candidatePhoto = ? WHERE candidate_id = ? AND number = ?', [candidatePhoto, candidateId, candidatePhoto.number], (updateErr) => {
+          db.query('UPDATE photos SET photo = ? WHERE user_id = ? AND number = ?', [userPhoto, userId, userPhoto.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
-              res.status(500).send('Error updating the Candidate photo');
+              res.status(500).send('Error updating the user photo');
             } else {
               const updated = { ...photoFromDB, ...photoToUpdate };
               res.status(200).send(updated);
@@ -50,21 +50,21 @@ photoRoutes.post('/:candidate_id/photos', verifyToken, upload.single('blob'), (r
           });
         } else {
           db.query(
-            'INSERT INTO candidatePop (number, photo, candidateId) VALUES (?, ?, ?)',
-            [candidatePhoto.number,
-              candidatePhoto.photo,
-              candidateId],
+            'INSERT INTO photos (number, photo, userId) VALUES (?, ?, ?)',
+            [userPhoto.number,
+              userPhoto.photo,
+              userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.sendStatus(500).send('Error saving Candidate photo');
+                res.sendStatus(500).send('Error saving user photo');
               } else {
-                const updatedCandidatePhoto = {
+                const updateduserPhoto = {
                   id: insertResults.insertId,
-                  candidateId,
-                  photo: candidatePhoto.photo,
+                  userId,
+                  photo: userPhoto.photo,
                 };
-                res.status(201).send(updatedCandidatePhoto);
+                res.status(201).send(updateduserPhoto);
               }
             },
           );
@@ -73,12 +73,12 @@ photoRoutes.post('/:candidate_id/photos', verifyToken, upload.single('blob'), (r
     });
 });
 
-photoRoutes.delete('/:candidate_id/photos/:number', verifyToken, (req, res) => {
-  db.query('DELETE FROM photos WHERE candidate_id = ? AND number = ?', [req.params.candidate_id, req.params.number], (err, results) => {
+photoRoutes.delete('/:user_id/photos/:number', verifyToken, (req, res) => {
+  db.query('DELETE FROM photos WHERE user_id = ? AND number = ?', [req.params.user_id, req.params.number], (err, results) => {
     if (err) {
-      res.status(500).send('Error deleting a candidate photo');
-    } else if (results.affectedRows) res.status(200).send(' 🎉candidate photo deleted');
-    else res.status(404).send('candidate photo not found');
+      res.status(500).send('Error deleting a user photo');
+    } else if (results.affectedRows) res.status(200).send(' 🎉user photo deleted');
+    else res.status(404).send('user photo not found');
   });
 });
 
