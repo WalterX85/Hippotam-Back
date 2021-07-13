@@ -9,6 +9,7 @@ POST http://localhost:5000/screen
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNjE4MDI0M30.2WEY9UKn2Osx1gGcp39Bn977mwk8qJTa94Zckbgbalc
 
+
 {
 
     "name": "Dufour Thomas",
@@ -43,4 +44,6 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5000/screen/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTYyNjE2OTg1MH0.buBApOxUWdgI799EbnicvhGKEqh7y9XrBpGahQr-14I
+
 
