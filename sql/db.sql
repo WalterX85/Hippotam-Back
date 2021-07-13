@@ -16,20 +16,6 @@ CREATE TABLE `users` (
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidates`;
-
-CREATE TABLE `candidates` (
- `id` int NOT NULL AUTO_INCREMENT,
- `user_id` int NOT NULL,
- `name` varchar(100) NOT NULL,
- `username` varchar(100) NOT NULL,
- `telephone` varchar(100) NOT NUll,
-  PRIMARY KEY(`id`),
-   CONSTRAINT FK_UserCandidate FOREIGN KEY (user_id)
-    REFERENCES users(id)
-) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
-
-
 DROP TABLE IF EXISTS `login`;
 
 CREATE TABLE `login` (
@@ -46,157 +32,157 @@ DROP TABLE IF EXISTS `photos`;
 
 CREATE TABLE `photos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `candidate_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `number` int NOT NULL,
   `photo` BLOB,
   PRIMARY KEY(`id`),
-   CONSTRAINT FK_PhotosCandidate FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+   CONSTRAINT FK_PhotoUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 DROP TABLE IF EXISTS `videos`;
 
 CREATE TABLE `videos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `candidate_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-   CONSTRAINT FK_VideosCandidate FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_VideoUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS  `candidate_softskill`;
+DROP TABLE IF EXISTS  `softskill`;
 
-CREATE TABLE `candidate_softskill` (
+CREATE TABLE `softskill` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
    `number` int NOT NULL,
    `softskills` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateSoftSkill FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+ CONSTRAINT FK_SoftskillUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_value`;
+DROP TABLE IF EXISTS `value`;
 
-CREATE TABLE `candidate_value` (
+CREATE TABLE `value` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
    `number` int NOT NULL,
    `valueName` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateValue FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_ValueUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_langues`;
+DROP TABLE IF EXISTS `langue`;
 
-  CREATE TABLE `candidate_langues` (
+  CREATE TABLE `langue` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
    `number` int NOT NULL,
    `langueName` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateLangues FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_LangueUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_pop`;
+DROP TABLE IF EXISTS `pop`;
 
- CREATE TABLE `candidate_pop` (
+ CREATE TABLE `pop` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
    `number` int NOT NULL,
    `title` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidatePOP FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_PopUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
-DROP TABLE IF EXISTS `candidate_whatElse`;
+DROP TABLE IF EXISTS `whatElse`;
 
-CREATE TABLE `candidate_whatElse` (
+CREATE TABLE `whatElse` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `diplome` varchar(255) NOT NULL,
   `formation` varchar(255) NOT NULL,
   `lastJob` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidatewhatElse FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_WhatElseUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_hobbies`;
+DROP TABLE IF EXISTS `hobby`;
 
-CREATE TABLE `candidate_hobbies` (
+CREATE TABLE `hobby` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `name` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_Candidatehobbies FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_hobbiesUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_recommendations`;
+DROP TABLE IF EXISTS `recommendation`;
 
-CREATE TABLE `candidate_recommendations` (
+CREATE TABLE `recommendation` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `title` varchar(255) NOT NULL,
    `location` varchar(255) NOT NULL,
    `messageText` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateRecommendations FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_RecommendationUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_hardSkills`;
+DROP TABLE IF EXISTS `hardSkill`;
 
-CREATE TABLE `candidate_hardSkills` (
+CREATE TABLE `hardSkills` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `hardSkillsName` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateHardSkills FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_HardskillUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 
-DROP TABLE IF EXISTS `candidate_strength`;
+DROP TABLE IF EXISTS `strength`;
 
-CREATE TABLE `candidate_strength` (
+CREATE TABLE `strength` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `strength` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateStrength FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_StrengthUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
-DROP TABLE IF EXISTS `candidate_ambition`;
+DROP TABLE IF EXISTS `ambition`;
 
-CREATE TABLE `candidate_ambition` (
+CREATE TABLE `ambition` (
    `id` int NOT NULL AUTO_INCREMENT,
-   `candidate_id` int NOT NULL,
+   `user_id` int NOT NULL,
     `number` int NOT NULL,
    `ambition` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_CandidateAmbition FOREIGN KEY (candidate_id)
-    REFERENCES candidates(id)
+  CONSTRAINT FK_AmbitionUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
 

@@ -7,13 +7,14 @@ GET http://localhost:5000/screen/1
 ###
 POST http://localhost:5000/screen
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTYyNjE2OTg1MH0.buBApOxUWdgI799EbnicvhGKEqh7y9XrBpGahQr-14I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNjE4MDI0M30.2WEY9UKn2Osx1gGcp39Bn977mwk8qJTa94Zckbgbalc
+
 
 {
 
-    "name": "Calvin Hyacinth",
-    "username": "chyacin317",
-    "telephone": "0781843810"
+    "name": "Dufour Thomas",
+    "username": "toto",
+    "telephone": "06353535332"
 
 }
 
