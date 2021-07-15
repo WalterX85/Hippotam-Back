@@ -35,6 +35,15 @@ POST http://localhost:5000/login
 Content-Type: application/json
 
 {
+    "email": "encore317@hotmail.com",
+    "password": "johnbai"
+}
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
     "email": "thomas.dufour974@gmail.com",
     "password": "tom"
 }

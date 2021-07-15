@@ -141,7 +141,6 @@ CREATE TABLE `recommendation` (
     `number` int NOT NULL,
    `title` varchar(255) NOT NULL,
    `location` varchar(255) NOT NULL,
-   `messageText` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
   CONSTRAINT FK_RecommendationUser FOREIGN KEY (user_id)
     REFERENCES users(id)
