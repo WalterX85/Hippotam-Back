@@ -25,7 +25,7 @@ lastjobRoutes.post('/:user_id/lastjob', verifyToken, (req, res) => {
     number: req.body.number,
     lastjob: req.body.lastjob,
   };
-  db.query('SELECT * FROM lastjob WHERE user_id = ? AND number = ?',
+  db.query('SELECT lastjob FROM lastjob WHERE user_id = ? AND number = ?',
     [userId, userLastjob.number],
     (selectErr, selectResults) => {
       if (selectErr) {
@@ -34,7 +34,7 @@ lastjobRoutes.post('/:user_id/lastjob', verifyToken, (req, res) => {
         const lastjobFromDB = selectResults[0];
         if (lastjobFromDB) {
           const lastjobToUpdate = req.body;
-          db.query('UPDATE lastjob SET userLastjob = ? WHERE user_id = ? AND number = ?', [userLastjob, userId, userLastjob.number], (updateErr) => {
+          db.query('UPDATE lastjob SET lastjob = ? WHERE user_id = ? AND number = ?', [userLastjob, userId, userLastjob.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user last job');

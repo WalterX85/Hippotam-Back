@@ -25,7 +25,7 @@ formationRoutes.post('/:user_id/formation', verifyToken, (req, res) => {
     number: req.body.number,
     formation: req.body.formation,
   };
-  db.query('SELECT * FROM formation WHERE user_id = ? AND number = ?',
+  db.query('SELECT formation FROM formation WHERE user_id = ? AND number = ?',
     [userId, userFormation.number],
     (selectErr, selectResults) => {
       if (selectErr) {
@@ -34,7 +34,7 @@ formationRoutes.post('/:user_id/formation', verifyToken, (req, res) => {
         const formationFromDB = selectResults[0];
         if (formationFromDB) {
           const formationToUpdate = req.body;
-          db.query('UPDATE formation SET userFormation = ? WHERE user_id = ? AND number = ?', [userFormation, userId, userFormation.number], (updateErr) => {
+          db.query('UPDATE formation SET formation = ? WHERE user_id = ? AND number = ?', [userFormation, userId, userFormation.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user whatelse');

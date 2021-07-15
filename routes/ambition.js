@@ -34,7 +34,7 @@ ambitionRoutes.post('/:user_id/ambition', verifyToken, (req, res) => {
         const ambitionFromDB = selectResults[0];
         if (ambitionFromDB) {
           const ambitionToUpdate = req.body;
-          db.query('UPDATE ambition SET userAmbition = ? WHERE user_id = ? AND number = ?', [userAmbition.ambition, userId, userAmbition.number], (updateErr) => {
+          db.query('UPDATE ambition SET ambition = ? WHERE user_id = ? AND number = ?', [userAmbition.ambition, userId, userAmbition.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user ambition');

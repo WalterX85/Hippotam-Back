@@ -41,7 +41,7 @@ recommendationsRoutes.post('/:user_id/recommendations', verifyToken, upload.sing
         const recommendationFromDB = selectResults[0];
         if (recommendationFromDB) {
           const recommendationToUpdate = req.body;
-          db.query('UPDATE pop SET userRecommendation = ? WHERE user_id = ? AND number = ?', [userRecommendation, userId, userRecommendation.number], (updateErr) => {
+          db.query('UPDATE pop SET recommendation = ? WHERE user_id = ? AND number = ?', [userRecommendation, userId, userRecommendation.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user project');

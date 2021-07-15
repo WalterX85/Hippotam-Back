@@ -25,7 +25,7 @@ diplomeRoutes.post('/:user_id/diplome', verifyToken, (req, res) => {
     number: req.body.number,
     diplome: req.body.diplome,
   };
-  db.query('SELECT * FROM diplome WHERE user_id = ? AND number = ?',
+  db.query('SELECT diplome FROM diplome WHERE user_id = ? AND number = ?',
     [userId, userDiplome.number],
     (selectErr, selectResults) => {
       if (selectErr) {
@@ -34,7 +34,7 @@ diplomeRoutes.post('/:user_id/diplome', verifyToken, (req, res) => {
         const diplomeFromDB = selectResults[0];
         if (diplomeFromDB) {
           const diplomeToUpdate = req.body;
-          db.query('UPDATE diplome SET userDiplome = ? WHERE user_id = ? AND number = ?', [userDiplome, userId, userDiplome.number], (updateErr) => {
+          db.query('UPDATE diplome SET diplome = ? WHERE user_id = ? AND number = ?', [userDiplome, userId, userDiplome.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user diplome');
