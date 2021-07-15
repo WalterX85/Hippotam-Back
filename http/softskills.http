@@ -2,19 +2,19 @@
 GET http://localhost:5000/screen/2/softskills
 
 ###
-POST http://localhost:5000/screen/2/softskills
+POST http://localhost:5000/screen/1/softskills
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNjE2OTc3Nn0.6ysLXSEpHINIv3vewt5kpsk6PXj6NUbSuaP0PiyrJLA
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYyNjI2NTQ1MH0.oYc12TrU2D7DJbfcSlEtMQlHk_9tOEk0bxU-rLCGQXk
 
 {
+    "number": "1",
     "softskills":"communication"
 }
 
 ###
 POST http://localhost:5000/screen/1/softskills
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTYyNjE2OTg1MH0.buBApOxUWdgI799EbnicvhGKEqh7y9XrBpGahQr-14I
+Authorization: Bearer 
 
 {
     "number":  "2",
@@ -24,7 +24,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6M
 ###
 POST http://localhost:5000/screen/1/softskills
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTYyNjE2OTg1MH0.buBApOxUWdgI799EbnicvhGKEqh7y9XrBpGahQr-14I
+Authorization: Bearer 
 
 {
     "number":  "3",
@@ -34,5 +34,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6M
 ###
 DELETE http://localhost:5000/screen/1/softskills/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImlhdCI6MTYyNjE2OTg1MH0.buBApOxUWdgI799EbnicvhGKEqh7y9XrBpGahQr-14I
-
+Authorization: Bearer 
