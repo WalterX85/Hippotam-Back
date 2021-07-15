@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 lastjobRoutes.get('/:user_id/lastjob', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, lastJob FROM users JOIN lastjob ON users.id=lastjob.user_id ORDER BY name, username, number, lastJob',
+  db.query('SELECT name, username, number, lastjob FROM users JOIN lastjob ON users.id=lastjob.user_id ORDER BY name, username, number, lastJob',
     [userId],
     (err, results) => {
       if (err) {
