@@ -40,7 +40,7 @@ popRoutes.post('/:user_id/pop', verifyToken, upload.single('blob'), (req, res) =
         const popFromDB = selectResults[0];
         if (popFromDB) {
           const popToUpdate = req.body;
-          db.query('UPDATE pop SET userPop = ? WHERE user_id = ? AND number = ?', [userPop, userId, userPop.number], (updateErr) => {
+          db.query('UPDATE pop SET pop = ? WHERE user_id = ? AND number = ?', [userPop, userId, userPop.number], (updateErr) => {
             if (updateErr) {
               console.log(updateErr);
               res.status(500).send('Error updating the user project');
