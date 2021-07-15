@@ -50,7 +50,7 @@ photoRoutes.post('/:user_id/photos', verifyToken, upload.single('blob'), (req, r
           });
         } else {
           db.query(
-            'INSERT INTO photos (number, photo, userId) VALUES (?, ?, ?)',
+            'INSERT INTO photos(number, photo, userId) VALUES (?, ?, ?)',
             [userPhoto.number,
               userPhoto.photo,
               userId],

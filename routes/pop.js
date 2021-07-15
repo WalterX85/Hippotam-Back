@@ -51,7 +51,7 @@ popRoutes.post('/:user_id/pop', verifyToken, upload.single('blob'), (req, res) =
           });
         } else {
           db.query(
-            'INSERT INTO userPop(number, location, title, userId) VALUES (?, ?, ?, ?)',
+            'INSERT INTO pop(number, location, title, userId) VALUES (?, ?, ?, ?)',
             [userPop.number,
               userPop.location,
               userPop.title,

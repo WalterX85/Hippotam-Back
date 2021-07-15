@@ -44,20 +44,20 @@ hardSkillsRoutes.post('/:user_id/hardSkills', verifyToken, (req, res) => {
             }
           });
         } else {
-          db.query('INSERT INTO userHardSkills(number, hardSkillsName, user_id) VALUES (?, ?, ?)',
+          db.query('INSERT INTO hardSkills(number, hardSkillsName, user_id) VALUES (?, ?, ?)',
             [userHardSkills.number,
               userHardSkills.hardSkillsName,
               userId],
             (err, insertResults) => {
               if (err) {
                 console.log(err);
-                res.status(500).send('Error saving user hardskills');
+                res.status(500).send('Error saving user hard skills');
               } else {
                 const updateduserHardSkills = {
                   id: insertResults.insertId,
                   userId,
                   number: userHardSkills.number,
-                  langueName: userHardSkills.hardSkillsName,
+                  hardSkillsName: userHardSkills.hardSkillsName,
                 };
                 res.status(201).send(updateduserHardSkills);
               }

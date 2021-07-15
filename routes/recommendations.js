@@ -52,7 +52,7 @@ recommendationsRoutes.post('/:user_id/recommendations', verifyToken, upload.sing
           });
         } else {
           db.query(
-            'INSERT INTO userRecommendation(number, location, title, userId) VALUES (?, ?, ?, ?)',
+            'INSERT INTO recommendation(number, location, title, userId) VALUES (?, ?, ?, ?)',
             [userRecommendation.number,
               userRecommendation.location,
               userRecommendation.title,

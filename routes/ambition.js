@@ -44,7 +44,7 @@ ambitionRoutes.post('/:user_id/ambition', verifyToken, (req, res) => {
             }
           });
         } else {
-          db.query('INSERT INTO userAmbition(number, ambition, user_id) VALUES (?, ?, ?)',
+          db.query('INSERT INTO ambition(number, ambition, user_id) VALUES (?, ?, ?)',
             [userAmbition.number,
               userAmbition.ambition,
               userId],
