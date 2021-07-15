@@ -105,17 +105,39 @@ DROP TABLE IF EXISTS `pop`;
     REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
-DROP TABLE IF EXISTS `whatElse`;
+DROP TABLE IF EXISTS `formation`;
 
-CREATE TABLE `whatElse` (
+CREATE TABLE `formation` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `user_id` int NOT NULL,
+    `number` int NOT NULL,
+  `formation` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`),
+  CONSTRAINT FK_FormationUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `diplome`;
+
+CREATE TABLE `diplome` (
    `id` int NOT NULL AUTO_INCREMENT,
    `user_id` int NOT NULL,
     `number` int NOT NULL,
    `diplome` varchar(255) NOT NULL,
-  `formation` varchar(255) NOT NULL,
+  PRIMARY KEY(`id`),
+  CONSTRAINT FK_DiplomeUser FOREIGN KEY (user_id)
+    REFERENCES users(id)
+) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `lastjob`;
+
+CREATE TABLE `lastjob` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `user_id` int NOT NULL,
+    `number` int NOT NULL,
   `lastJob` varchar(255) NOT NULL,
   PRIMARY KEY(`id`),
-  CONSTRAINT FK_WhatElseUser FOREIGN KEY (user_id)
+  CONSTRAINT FK_LastJobUser FOREIGN KEY (user_id)
     REFERENCES users(id)
 ) ENGINE = InnoDB AUTO_INCREMENT= 1 DEFAULT CHARSET = utf8mb4;
 
