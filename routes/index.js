@@ -34,7 +34,7 @@ routes.use('/screen', ambitionRoutes);
 routes.use('/screen', popRoutes);
 routes.use('/screen', photoRoutes);
 routes.use('/upload', uploadRoutes);
-routes.use('/uploads', express.static('uploads'));
+routes.use('/uploads', express.static(`${__dirname}/public/photos`));
 
 // define the index route
 routes.get('/', (req, res) => {
