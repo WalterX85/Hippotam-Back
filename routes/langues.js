@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares/auth');
 // user's langue routes
 languesRoutes.get('/:user_id/langues', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, langueName FROM users JOIN langue ON users.id=langue.user_id ORDER BY name, username, number, langueName',
+  db.query('SELECT number, langueName FROM langue WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

@@ -6,7 +6,7 @@ const { verifyToken } = require('../middlewares/auth');
 // user's ambition routes
 strengthRoutes.get('/:user_id/strength', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, strength FROM users JOIN strength ON users.id=strength.user_id ORDER BY name, username, number, strength',
+  db.query('SELECT number, strength FROM strength WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

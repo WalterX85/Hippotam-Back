@@ -10,7 +10,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 photoRoutes.get('/:user_id/photos', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, photo FROM users JOIN photos ON users.id=photos.user_id ORDER BY name, username, number, name, photo',
+  db.query('SELECT number, photo FROM photos WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {
