@@ -34,7 +34,7 @@ CREATE TABLE `photos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `number` int NOT NULL,
-  `photo` BLOB,
+  `photo` TEXT,
   PRIMARY KEY(`id`),
    CONSTRAINT FK_PhotoUser FOREIGN KEY (user_id)
     REFERENCES users(id)
