@@ -10,7 +10,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 popRoutes.get('/:user_id/pop', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, location, title FROM users JOIN pop ON users.id=pop.user_id ORDER BY name, username, number, location, title',
+  db.query('SELECT number, location, title FROM pop ON WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

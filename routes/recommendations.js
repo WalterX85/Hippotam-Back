@@ -11,7 +11,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 recommendationsRoutes.get('/:user_id/recommendations', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, location, title FROM users JOIN recommendation ON users.id=recommendation.user_id ORDER BY name, username, number, location, title',
+  db.query('SELECT number, location, title FROM recommendation WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

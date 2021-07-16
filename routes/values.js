@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares/auth');
 // user's value routes
 myValuesRoutes.get('/:user_id/values', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, valueName FROM users JOIN value ON users.id=value.user_id ORDER BY name, username, number, valueName',
+  db.query('SELECT number, valueName FROM value WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

@@ -6,7 +6,7 @@ const { verifyToken } = require('../middlewares/auth');
 // user's soft skills routes
 softskillRoutes.get('/:user_id/softskills', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, softskills FROM users JOIN softskill ON users.id=softskill.user_id  ORDER BY name, username, number, softskills',
+  db.query('SELECT number, softskills FROM softskill WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

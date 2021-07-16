@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 formationRoutes.get('/:user_id/formation', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, formation FROM users JOIN formation ON users.id=formation.user_id ORDER BY name, username, number, formation',
+  db.query('SELECT number, formation FROM formation WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {

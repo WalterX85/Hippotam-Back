@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares/auth');
 
 diplomeRoutes.get('/:user_id/diplome', (req, res) => {
   const userId = req.params.user_id;
-  db.query('SELECT name, username, number, diplome FROM users JOIN diplome ON users.id=diplome.user_id ORDER BY name, username, number, diplome',
+  db.query('SELECT number, diplome FROM diplome WHERE user_id=?',
     [userId],
     (err, results) => {
       if (err) {
